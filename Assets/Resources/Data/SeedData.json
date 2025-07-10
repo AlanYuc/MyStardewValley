@@ -1,0 +1,41 @@
+[
+  {
+    "id" : 1,
+    "item_id": 21,
+    "name" : "辣椒种子",
+    "prefab_name": "pepper_seed",
+    "state_count": 7,
+    "timePerStage": [5, 6, 10, 15, 5, 5],
+    "seed_type": "Pepper"
+  },
+  {
+    "id" : 2,
+    "item_id": 22,
+    "name" : "防风草种子",
+    "prefab_name": "parsnip_seed",
+    "state_count": 6,
+    "timePerStage": [2, 4, 3, 2, 2],
+    "seed_type": "Parsnip"
+  },
+  {
+    "id" : 3,
+    "item_id": 23,
+    "name" : "南瓜种子",
+    "prefab_name": "pumpkin_seed",
+    "state_count": 7,
+    "timePerStage": [5, 6, 10, 15, 5, 5],
+    "seed_type": "Pumpkin"
+  },
+
+  {
+    "id" : 4,
+    "item_id": 24,
+    "name" : "白萝卜种子",
+    "prefab_name": "turnip_seed",
+    "state_count": 6,
+    "timePerStage": [5, 6, 10, 15, 5],
+    "seed_type": "Turnip"
+
+  }
+]
+

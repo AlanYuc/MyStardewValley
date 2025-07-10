@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "铁剑",
+    "iconPath": "Sprites/Items/sword",
+    "isStackable": false,
+    "maxStack": 1,
+    "type": "weapon"
+  }
+]

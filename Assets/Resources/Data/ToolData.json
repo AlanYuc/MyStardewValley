@@ -1,0 +1,11 @@
+[
+  {
+    "id" : 1,
+    "type": "Hoe",
+    "displayName": "锄头",
+    "staminaCost": 5,
+    "useRange": 1.2,
+    "iconPath": "Sprites/Tools/hoe",
+    "animatorOverridePath": "Animations/Tools/HoeOverride"
+  }
+]

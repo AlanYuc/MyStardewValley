@@ -1,0 +1,181 @@
+[
+  {
+    "plot_id": 1,
+    "summary": "开场动画",
+    "film_name": "OpeningFilm",
+    "can_skip": true,
+    "successive": true
+  },
+  {
+    "plot_id": 2,
+    "summary": "玩家下车见到罗宾, 见到了新房子和镇长刘易斯, 留下了见npc的任务",
+    "can_fast": true,
+    "dialogues": [
+      {
+        "dialogues_id": 1,
+        "speaker_id": 2,
+        "talk_content": "你好，新来的！欢迎来到我们的村庄。",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 2,
+        "speaker_id": 2,
+        "talk_content": "我叫罗宾, 是这里的木匠。是镇长路易斯派我来送你去你的新家的。他本人已经在那里为你打扫屋子了。",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 3,
+        "speaker_id": 2,
+        "talk_content": "农场就在那边，跟我来吧。",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 4,
+        "speaker_id": 2,
+        "talk_content": "这里就是你的农场了。",
+        "before_anim": "MoveFarm",
+        "after_anim": "玩家震惊 无语",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 5,
+        "speaker_id": 2,
+        "talk_content": "怎么了?",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 6,
+        "speaker_id": 2,
+        "talk_content": "虽说长满了杂草, 但下面的泥土可是很肥沃的!",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 7,
+        "speaker_id": 2,
+        "talk_content": "只要有点耐心, 肯定很快就能清理干净。",
+        "after_anim": "一起移动到房子前面, 转身",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 8,
+        "speaker_id": 2,
+        "talk_content": "......铛铛铛铛, 这就是你的新房子。",
+        "after_anim": "一起移动到房子前面, 转身",
+        "portrait": "Happy"
+      },
+      {
+        "dialogues_id": 9,
+        "speaker_id": 3,
+        "talk_content": "啊, 新来的农夫到了",
+        "before_anim": "村长开门出来",
+        "portrait": "Happy"
+      },
+      {
+        "dialogues_id": 10,
+        "speaker_id": 3,
+        "talk_content": "欢迎! 我叫刘易斯, 是星露谷的镇长",
+        "before_anim": "村长移动到玩家面前",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 11,
+        "speaker_id": 3,
+        "talk_content": "你不知道, 很多人都对你好奇",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 12,
+        "speaker_id": 3,
+        "talk_content": "那么，你是搬来你祖父的老房子。很有“乡土味”。",
+        "before_anim": "村长转头看房子",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 13,
+        "speaker_id": 2,
+        "talk_content": "乡土味？真是个糟糕的形容词。",
+        "before_anim": "镜头往上移动一点",
+        "portrait": "Happy"
+      },
+      {
+        "dialogues_id": 14,
+        "speaker_id": 2,
+        "talk_content": "“顽固”还差不多。",
+        "portrait": "Happy"
+      },
+      {
+        "dialogues_id": 15,
+        "speaker_id": 3,
+        "talk_content": "太无礼了，他只是想诱惑你购买房屋升级服务。",
+        "portrait": "Rage",
+        "before_anim": "生气的跳起来"
+      },
+      {
+        "dialogues_id": 16,
+        "speaker_id": 3,
+        "talk_content": "话说你赶了那么远的路, 一定很累了。 你先去休息一下。",
+        "portrait": "Normal",
+        "before_anim": "女生尴尬无语"
+      },
+      {
+        "dialogues_id": 17,
+        "speaker_id": 3,
+        "talk_content": "明天你到镇上走走。村民都很想认识你。",
+        "portrait": "Normal",
+        "after_anim": "村长走出去, 刘易斯也走了, 屏幕变黑"
+      }
+    ],
+    "successive": true
+  },
+  {
+    "plot_id": 3,
+    "summary": "领取见面任务",
+    "task_class": "Task1",
+    "successive": false
+  },
+  {
+    "plot_id": 4,
+    "summary": "见到皮埃尔, 对话, 领取下一个任务",
+    "can_fast": true,
+    "dialogues": [
+      {
+        "dialogues_id": 1,
+        "speaker_id": 4,
+        "talk_content": "嘿，您就是新来的农夫先生吧! 我是皮埃尔, 镇上的杂货店店主。",
+        "portrait": "Normal"
+      },
+      {
+        "dialogues_id": 2,
+        "speaker_id": 4,
+        "talk_content": "如果想买种子的话, 来我这里就对了。你可以购买一些防风草种子, 镇长想用来做杂交实验。",
+        "portrait": "Embarrassed"
+      }
+    ],
+    "successive": true
+  },
+  {
+    "plot_id": 5,
+    "summary": "领取种植任务",
+    "task_class": "Task2",
+    "successive": false
+  },
+  {
+    "plot_id": 6,
+    "summary": "村长感谢我, 对话后游戏胜利",
+    "dialogues": [
+      {
+        "dialogues_id": 1,
+        "speaker_id": 3,
+        "talk_content": "你来的正好, 我们实验遇到了瓶颈, 还差5个防风草, 真的太谢谢你了。为了表达感谢, 这里有500元 请你收下!",
+        "portrait": "Happy"
+      },
+      {
+        "dialogues_id": 2,
+        "speaker_id": 3,
+        "talk_content": "你的主线任务完成了! 你可以继续探索其他的内容了。",
+        "portrait": "Normal"
+      }
+    ],
+    "successive": false
+  }
+]

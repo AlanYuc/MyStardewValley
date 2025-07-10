@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "铁剑",
+    "iconPath": "Sprites/Items/sword",
+    "isStackable": false,
+    "maxStack": 1,
+    "type": "weapon"
+  },
+  {
+    "id": 2,
+    "name": "治疗药水",
+    "iconPath": "Sprites/Items/potion",
+    "isStackable": true,
+    "maxStack": 5,
+    "type": "consumable"
+  }
+]

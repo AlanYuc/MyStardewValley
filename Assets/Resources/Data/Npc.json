@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "艾利克斯",
+    "english_name": "Alex"
+  },
+  {
+    "id": 2,
+    "name" : "罗宾",
+    "english_name": "Robin", 
+    "emotions": {
+      "Normal": "Normal",
+      "Happy": "Happy",
+      "Embarrassed": "Embarrassed",
+      "Worry": "Worry",
+      "Angry": "Angry"
+    }
+  },
+  {
+    "id": 3,
+    "name": "刘易斯",
+    "english_name": "Lewis",
+    "emotions": {
+      "Normal": "Normal",
+      "Happy": "Happy",
+      "Worry": "Worry",
+      "Angry": "Angry",
+      "Rage": "Rage"
+    }
+  },
+  {
+   "id": 4,
+    "name": "皮埃尔",
+    "english_name": "Pierre",
+    "emotions": {
+      "Normal": "Normal",
+      "Happy": "Happy",
+      "Embarrassed": "Embarrassed",
+      "Angry": "Angry",
+      "Shock": "Shock"
+    }
+  }
+]

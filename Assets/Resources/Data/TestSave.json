@@ -1,0 +1,413 @@
+{
+  "playerSaveData": {
+    "player_pos_x": 0,
+    "player_pos_y": 0,
+    "player_pos_z": 0,
+    "player_name": "",
+    "farm_name": "",
+    "favorite": "",
+    "exp": 0,
+    "level": 1
+  },
+  "physiologicalSaveData": {
+    "energy": 150,
+    "hp": 100
+  },
+  "tradeSaveData": {
+    "coins": 1000
+  },
+  "timeSaveData": {
+    "currentYear": 1,
+    "currentSeason": "Spring",
+    "currentDay": 1,
+    "hour": 6,
+    "minute": 0,
+    "gameTimer": 0,
+    "gameTimeSecond": 20,
+    "realTimeSecond": 10
+  },
+  "backpackSaveData": {
+    "active_slot": 0,
+    "pickup_items_list": [
+      {
+        "x": 2,
+        "y": 2,
+        "z": 2,
+        "item_data": {
+          "id": 24,
+          "name": "白萝卜种子",
+          "describe": "种植白萝卜",
+          "icon_name": "turnip_seed",
+          "icon_source": "Images/Items/pepper_seed",
+          "isStackable": true,
+          "maxStack": 9,
+          "item_type": "Seed",
+          "price": 15,
+          "current_stack": 5
+        }
+      }
+    ],
+    "backpack_item_list": [
+      {
+        "id": 24,
+        "name": "白萝卜种子",
+        "describe": "种植白萝卜",
+        "icon_name": "turnip_seed",
+        "icon_source": "Images/Items/pepper_seed",
+        "isStackable": true,
+        "maxStack": 9,
+        "item_type": "Seed",
+        "price": 15,
+        "current_stack": 5
+      }
+    ],
+    "toolbar_item_list": [
+      {
+        "id": 8,
+        "name": "花洒",
+        "describe": "用于灌溉, 靠近水源可以接满水",
+        "icon_name": "watering_can",
+        "icon_source": "Images/Items/mushroom",
+        "isStackable": true,
+        "maxStack": 1,
+        "item_type": "Tool",
+        "price": 10,
+        "current_stack": 1
+      }
+    ],
+    "box_data_list": [
+      {
+        "x": 6,
+        "y": 0,
+        "z": 0,
+        "item_datas": [
+          {
+            "id": 23,
+            "name": "南瓜种子",
+            "describe": "种植南瓜",
+            "icon_name": "pumpkin_seed",
+            "icon_source": "Images/Items/pepper_seed",
+            "isStackable": true,
+            "maxStack": 9,
+            "item_type": "Seed",
+            "price": 15,
+            "current_stack": 3
+          },
+          {},{},{},{},{},{},
+          {},{},{},{},{},{},
+          {},{},{},{},{}
+        ]
+      }
+ 
+    ]
+  },
+  "plantSaveData": {
+    "gridData": [
+      [
+        {
+          "isPlowed": true,
+          "isWatered": true,
+          "isPlanted": true,
+          "plant_id": 1,
+          "timer": 0,
+          "current_state": 3,
+          "isGrowing": true,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        }
+      ],
+      [
+        {
+          "isPlowed": true,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        }
+      ],
+      [
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        }
+      ],
+      [
+        {
+          "isPlowed": true,
+          "isWatered": true,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        }
+      ],
+      [
+        {
+          "isPlowed": true,
+          "isWatered": true,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        },
+        {
+          "isPlowed": false,
+          "isWatered": false,
+          "isPlanted": false,
+          "plant_id": -1,
+          "timer": 0,
+          "current_state": 0,
+          "isGrowing": false,
+          "isMature": false
+        }
+      ]
+    ]
+  },
+  "environmentSaveData": {
+    "stateless_objects": {
+      "100": [
+        {
+          "x": 1,
+          "y": 1,
+          "z": 2
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "z": 4
+        }
+      ],
+      "101": [
+        {
+          "x": 3,
+          "y": 2,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "z": 2
+        }
+      ],
+      "102": [
+        {
+          "x": 5,
+          "y": 1,
+          "z": 2
+        },
+        {
+          "x": 5,
+          "y": 5,
+          "z": 1
+        },
+        {
+          "x": 6,
+          "y": 6,
+          "z": 1
+        }
+      ]
+    }
+  }
+}

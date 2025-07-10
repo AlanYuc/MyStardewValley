@@ -1,0 +1,14 @@
+[
+  {
+    "id": 100,
+    "prefab_name": "rock"
+  },
+  {
+    "id": 101,
+    "prefab_name": "weed"
+  },
+  {
+    "id": 102,
+    "prefab_name": "tree"
+  }
+]
