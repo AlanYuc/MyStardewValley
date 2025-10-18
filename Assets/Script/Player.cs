@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5f;//移动速度
-    public bool isMove = false;//是否移动
-    public Vector2 movementDir;//移动方向，总共八个
-
+    /// <summary>
+    /// 移动速度
+    /// </summary>
+    public float moveSpeed = 5f;
+    /// <summary>
+    /// 是否移动
+    /// </summary>
+    public bool isMove = false;
+    /// <summary>
+    /// 移动方向，总共八个
+    /// </summary>
+    public Vector2 movementDir;
+    /// <summary>
+    /// 记录停止移动前的移动方向，用于确定角色动画朝向
+    /// </summary>
+    public Vector2 lastMovementDir;
+    /// <summary>
+    /// 角色刚体
+    /// </summary>
     public Rigidbody2D _rb;
+    /// <summary>
+    /// 角色动画器
+    /// </summary>
+    public Animator _anim;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb     = GetComponent<Rigidbody2D>();
+        _anim   = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -41,5 +61,26 @@ public class Player : MonoBehaviour
 
         //使用刚体进行移动
         _rb.velocity = movementDir * moveSpeed;
+
+        //判断是否移动
+        if(movementDir == Vector2.zero)
+        {
+            isMove = false;
+        }
+        else
+        {
+            isMove= true;
+        }
+
+        //将参数赋值到animator
+        _anim.SetBool("IsMove", isMove);
+
+        //记录并将最后的移动方向赋值到animator,只记录不为0
+        if(movementDir != Vector2.zero)
+        {
+            lastMovementDir = movementDir;
+            _anim.SetFloat("LastHorizontal", lastMovementDir.x);
+            _anim.SetFloat("LastVertical", lastMovementDir.y);
+        }
     }
 }
