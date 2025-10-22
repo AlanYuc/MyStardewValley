@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,5 +21,34 @@ public class Slot : MonoBehaviour
     public void SetContainer(InventoryContainer ic)
     {
         inventoryContainer = ic;
+    }
+
+    /// <summary>
+    /// 设置item数量
+    /// </summary>
+    /// <param name="quantity"></param>
+    public void SetItemQuantity(int quantity)
+    {
+        bindItem.SetItemQuantity(quantity);
+    }
+
+    /// <summary>
+    /// 添加item
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <param name="quantity"></param>
+    public void AddItem(ItemData itemData, int quantity)
+    {
+        //生成item
+        GameObject go = Instantiate(BackpackSystem.Instance.itemPrefab, transform);
+        //获取item组件
+        Item item = go.AddComponent<Item>();
+
+        //双向绑定
+        bindItem = item;
+        item.bindSlot = this;
+
+        //设置数据
+        item.SetItem(itemData, quantity);
     }
 }
