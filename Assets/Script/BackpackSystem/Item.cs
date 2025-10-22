@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,5 +48,32 @@ public class Item : MonoBehaviour
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// 设置item数量
+    /// </summary>
+    /// <param name="quantity"></param>
+    public void SetItemQuantity(int quantity)
+    {
+        itemData.curStack = quantity;
+        
+        //数量等于1 就不显示文本
+        _quantity.text = itemData.curStack > 1 ? quantity.ToString() : "";
+    }
+
+    public void SetItem(ItemData itemData, int quantity)
+    {
+        //添加数据
+        this.itemData = itemData;
+        //设置数量
+        SetItemQuantity(quantity);
+
+        //数量为0时销毁
+        if(this.itemData == null || itemData.curStack == 0)
+        {
+            Debug.Log("销毁物品");
+            Destroy(gameObject);
+        }
     }
 }

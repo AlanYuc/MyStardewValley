@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +51,11 @@ public class ItemData
     /// 物品图标的名称
     /// </summary>
     public string iconName;
+    /// <summary>
+    /// 物品图标
+    /// </summary>
+    [JsonIgnore]
+    public Sprite icon;
     /// <summary>
     /// 物品的购入价格
     /// </summary>
