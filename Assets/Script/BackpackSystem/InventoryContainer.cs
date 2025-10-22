@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,10 +28,46 @@ public class InventoryContainer : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             //实例化生成一个插槽，并将其slot组件信息添加到列表中
-            GameObject go = Instantiate(BackpackSystem.Instance.slot_prefab, _slotListTrans);
+            GameObject go = Instantiate(BackpackSystem.Instance.slotPrefab, _slotListTrans);
             Slot slot = go.GetComponent<Slot>();
             slot.SetContainer(this);
             slotList.Add(slot);
         }
+    }
+
+    /// <summary>
+    /// 在背包中查找可用的slot
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <returns></returns>
+    public Slot FindAvailableSlot(ItemData itemData)
+    {
+        foreach (Slot slot in slotList)
+        {
+            if (slot.bindItem != null &&
+                slot.bindItem.itemData.id == itemData.id &&
+                slot.bindItem.itemData.curStack < itemData.maxStack) 
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 在特定背包中查找一个空的slot
+    /// </summary>
+    /// <returns></returns>
+    public Slot FindEmptySlot()
+    {
+        foreach(Slot slot in slotList)
+        {
+            if(slot.bindItem == null)
+            {
+                return slot;
+            }
+        }
+
+        return null;
     }
 }
