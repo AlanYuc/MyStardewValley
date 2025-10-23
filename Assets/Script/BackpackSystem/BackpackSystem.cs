@@ -164,7 +164,33 @@ public class BackpackSystem : MonoBehaviour
             surplus = overflow;
         }
 
-        
+        //4.查找背包是否由空格子
+        while (surplus > 0)
+        {
+            //尝试找一个空格子
+            Slot emptySlot = FindEmptySlot(backpack);
+
+            //没有空格子
+            if (emptySlot == null)
+            {
+                break;
+            }
+
+            //溢出值
+            int overflow = surplus - itemData.maxStack;
+            if (overflow > 0)
+            {
+                emptySlot.AddItem(itemData, itemData.maxStack);
+            }
+            else
+            {
+                emptySlot.AddItem(itemData, surplus);
+            }
+            surplus = overflow;
+        }
+
+        //5.还有多余的生成在脚下
+        //To do...
     }
 
     /// <summary>
