@@ -68,12 +68,8 @@ public class Item : MonoBehaviour
         //this.itemData = itemData;
         AddItemData(itemData);
 
-        Debug.Log("设置数量前 的数量：" + itemData.curStack);
-
         //设置数量
         SetItemQuantity(quantity);
-
-        Debug.Log("设置数量后 的数量：" + itemData.curStack);
 
         //数量为0时销毁
         if (this.itemData == null || this.itemData.curStack == 0)

@@ -48,9 +48,6 @@ public class Slot : MonoBehaviour
         item.bindSlot = this;
         bindItem = item;
 
-        Debug.Log("生成一个物品后的数量：" + item.itemData.curStack);
-        Debug.Log("传递的进来的数量：" + itemData.curStack);
-
         //设置数据
         item.SetItem(itemData, quantity);
     }
