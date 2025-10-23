@@ -63,12 +63,31 @@ public class BackpackSystem : MonoBehaviour
         //模拟从商店购物，然后添加一个道具进入背包
         if (Input.GetKeyDown(KeyCode.P))
         {
-            //TryAddItem();
+            TryAddItem(DataManager.Instance.itemDataList[0],1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            TryAddItem(DataManager.Instance.itemDataList[8], 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            foreach(Slot slot in toolbar.slotList)
+            {
+                if (slot.bindItem != null)
+                {
+                    Debug.Log("当前slot内的文本显示物品数量：" + slot.bindItem._quantity.text);
+                    Debug.Log("当前slot内的实际物品数量：" + slot.bindItem.itemData.curStack);
+                }
+            }
         }
     }
 
     public void TryAddItem(ItemData itemData, int quantity)
     {
+        Debug.Log("每次按下P时的数据：" + itemData.curStack);
+
         //剩余未被添加的道具数量
         int surplus = quantity;
 
