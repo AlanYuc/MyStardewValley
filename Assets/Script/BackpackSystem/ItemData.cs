@@ -9,7 +9,7 @@ public enum ItemType
 {
     Tool,//工具
     Seed,//种子
-    Matarial,//材料
+    Material,//材料
     Food,//食物
     Medicine,//药水
     Weapon,//武器
