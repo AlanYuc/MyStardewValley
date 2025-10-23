@@ -42,11 +42,14 @@ public class Slot : MonoBehaviour
         //生成item
         GameObject go = Instantiate(BackpackSystem.Instance.itemPrefab, transform);
         //获取item组件
-        Item item = go.AddComponent<Item>();
+        Item item = go.GetComponent<Item>();
 
         //双向绑定
-        bindItem = item;
         item.bindSlot = this;
+        bindItem = item;
+
+        Debug.Log("生成一个物品后的数量：" + item.itemData.curStack);
+        Debug.Log("传递的进来的数量：" + itemData.curStack);
 
         //设置数据
         item.SetItem(itemData, quantity);
