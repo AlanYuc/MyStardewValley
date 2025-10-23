@@ -56,24 +56,51 @@ public class Item : MonoBehaviour
     /// <param name="quantity"></param>
     public void SetItemQuantity(int quantity)
     {
-        itemData.curStack = quantity;
-        
+        this.itemData.curStack = quantity;
+
         //数量等于1 就不显示文本
-        _quantity.text = itemData.curStack > 1 ? quantity.ToString() : "";
+        _quantity.text = this.itemData.curStack > 1 ? quantity.ToString() : "";
     }
 
     public void SetItem(ItemData itemData, int quantity)
     {
         //添加数据
-        this.itemData = itemData;
+        //this.itemData = itemData;
+        AddItemData(itemData);
+
+        Debug.Log("设置数量前 的数量：" + itemData.curStack);
+
         //设置数量
         SetItemQuantity(quantity);
 
+        Debug.Log("设置数量后 的数量：" + itemData.curStack);
+
         //数量为0时销毁
-        if(this.itemData == null || itemData.curStack == 0)
+        if (this.itemData == null || this.itemData.curStack == 0)
         {
             Debug.Log("销毁物品");
             Destroy(gameObject);
         }
+
+        //设置图片
+        _icon.sprite = this.itemData.icon;
+    }
+
+    /// <summary>
+    /// itemData的数据更新
+    /// </summary>
+    /// <param name="itemData"></param>
+    private void AddItemData(ItemData itemData)
+    {
+        this.itemData.id = itemData.id;
+        this.itemData.name = itemData.name;
+        this.itemData.description = itemData.description;
+        this.itemData.isStackable = itemData.isStackable;
+        this.itemData.maxStack = itemData.maxStack;
+        this.itemData.curStack = itemData.curStack;
+        this.itemData.itemType = itemData.itemType;
+        this.itemData.iconName = itemData.iconName;
+        this.itemData.icon = itemData.icon;
+        this.itemData.price = itemData.price;
     }
 }
