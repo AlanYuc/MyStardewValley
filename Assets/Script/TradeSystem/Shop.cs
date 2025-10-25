@@ -62,14 +62,15 @@ public class Shop : MonoBehaviour
             //添加点击事件
             go.GetComponent<Button>().onClick.AddListener(() =>
             {
-                //To do 先判断金币是否够用
-                //if (金币足够)
-                //{
-                //    //消耗金币
+                //先判断金币是否够用
+                if (TradeSystem.Instance.coinModule.CheckEnough(itemData.price))
+                {
+                    //消耗金币
+                    TradeSystem.Instance.coinModule.ChangeCoin(-itemData.price);
 
-                //    //添加物品
-                      BackpackSystem.Instance.TryAddItem(itemData, 1);
-                //}
+                    //添加物品
+                    BackpackSystem.Instance.TryAddItem(itemData, 1);
+                }
             });
         }
     }
