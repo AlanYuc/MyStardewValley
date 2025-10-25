@@ -52,7 +52,7 @@ public class BackpackSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Test();
+        //Test();
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class BackpackSystem : MonoBehaviour
             TryAddItem(DataManager.Instance.itemDataList[0],1);
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             TryAddItem(DataManager.Instance.itemDataList[8], 1);
         }
