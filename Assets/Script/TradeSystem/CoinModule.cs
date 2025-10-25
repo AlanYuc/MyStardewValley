@@ -20,7 +20,7 @@ public class CoinModule : MonoBehaviour
     private void Awake()
     {
         _coinTxt = GameObject.Find("PlayerMoney").GetComponent<TMP_Text>();
-        currentCoin = 0;
+        currentCoin = 1000;
     }
 
     // Start is called before the first frame update
