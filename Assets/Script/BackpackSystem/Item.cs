@@ -99,4 +99,21 @@ public class Item : MonoBehaviour
         this.itemData.icon = itemData.icon;
         this.itemData.price = itemData.price;
     }
+
+    /// <summary>
+    /// 把item绑定到新的slot中
+    /// 拿起和放下的通用方法
+    /// </summary>
+    /// <param name="targetSlot">目标slot</param>
+    public void BindSlot(Slot targetSlot)
+    {
+        //将item移动到新的slot下
+        transform.SetParent(targetSlot.transform);
+        RectTransform rectTransform = transform as RectTransform;
+        rectTransform.anchoredPosition = Vector2.zero;
+
+        //重新双向绑定
+        bindSlot = targetSlot;
+        targetSlot.bindItem = this;
+    }
 }
