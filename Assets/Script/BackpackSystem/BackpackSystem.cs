@@ -18,6 +18,10 @@ public class BackpackSystem : MonoBehaviour
     /// </summary>
     public Toolbar toolbar;
     /// <summary>
+    /// 手掌背包的引用
+    /// </summary>
+    public Palm palm;
+    /// <summary>
     /// 插槽预制体
     /// </summary>
     public GameObject slotPrefab;
@@ -37,10 +41,12 @@ public class BackpackSystem : MonoBehaviour
         //获取引用
         backpack = GetComponentInChildren<Backpack>();
         toolbar = GetComponentInChildren<Toolbar>();
+        palm = GetComponentInChildren<Palm>();
 
-        //初始化,背包和工具栏一行最多12个格子，该数值可以修改
+        //初始化,背包和工具栏一行最多12个格子，手掌只有一个，该数值可以修改
         backpack.Initialize(12);
         toolbar.Initialize(12);
+        palm.Initialize(1);
     }
 
     // Start is called before the first frame update
@@ -212,5 +218,17 @@ public class BackpackSystem : MonoBehaviour
     public Slot FindAvailableSlot(InventoryContainer container, ItemData itemData)
     {
         return container.FindAvailableSlot(itemData);
+    }
+
+    /// <summary>
+    /// 拿起物品
+    /// </summary>
+    /// <param name="slot"></param>
+    public void Pickup(Slot slot)
+    {
+        Debug.Log("Pickup方法");
+
+        slot.bindItem.BindSlot(palm.slotList[0]);
+        slot.bindItem = null;
     }
 }
