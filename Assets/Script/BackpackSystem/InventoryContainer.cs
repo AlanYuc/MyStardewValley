@@ -21,7 +21,7 @@ public class InventoryContainer : MonoBehaviour
     /// 背包初始化
     /// </summary>
     /// <param name="count">初始的物品数量</param>
-    public void Initialize(int count)
+    public virtual void Initialize(int count)
     {
         _slotListTrans = transform.Find("SlotList");
 
