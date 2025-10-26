@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 背包中的插槽脚本
 /// </summary>
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour,IPointerClickHandler
 {
     /// <summary>
     /// 插槽内对应的物品
@@ -50,5 +51,51 @@ public class Slot : MonoBehaviour
 
         //设置数据
         item.SetItem(itemData, quantity);
+    }
+
+    /// <summary>
+    /// 鼠标点击事件
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            LeftMouseClick();
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            RightMouseClick();
+        }
+        else if(eventData.button == PointerEventData.InputButton.Middle)
+        {
+            MiddleMouseClick();
+        }
+    }
+
+    private void LeftMouseClick()
+    {
+        if (BackpackSystem.Instance.palm.CheckNull())
+        {
+            //手掌是空的
+
+            if(this.bindItem != null)
+            {
+                //点击的slot有物品
+
+                //两个条件满足，可以拿起物品
+                BackpackSystem.Instance.Pickup(this);
+            }
+        }
+    }
+
+    private void MiddleMouseClick()
+    {
+        
+    }
+
+    private void RightMouseClick()
+    {
+        
     }
 }
