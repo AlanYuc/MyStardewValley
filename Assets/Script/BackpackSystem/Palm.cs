@@ -42,7 +42,40 @@ public class Palm : InventoryContainer
     // Update is called once per frame
     void Update()
     {
-        
+        if (slotList[0].bindItem != null)
+        {
+            FollowMouse();
+        }
+    }
+
+    /// <summary>
+    /// item鼠标跟随
+    /// </summary>
+    private void FollowMouse()
+    {
+        //输出的坐标
+        Vector2 canvasLocalPosition;
+
+        //1.将鼠标位置转换为当前的canvas坐标
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            UIManager.Instance._canvasRect,
+            Input.mousePosition,
+            UIManager.Instance.uiCamera,
+            out canvasLocalPosition
+            );
+
+        //2.将canvas本地坐标转换为世界坐标
+        Vector3 worldPosition = UIManager.Instance._canvas.transform.TransformPoint(canvasLocalPosition);
+
+        //3.将世界坐标转换为父对象下的本地坐标
+        Vector2 parentLocalPoint = slotList[0].transform.InverseTransformPoint(worldPosition);
+
+        //4.平滑更新UI位置
+        ((RectTransform)slotList[0].bindItem.transform).anchoredPosition = Vector2.Lerp(
+            ((RectTransform)slotList[0].bindItem.transform).anchoredPosition,
+            parentLocalPoint,
+            Time.deltaTime * 200
+            );
     }
 
     /// <summary>
