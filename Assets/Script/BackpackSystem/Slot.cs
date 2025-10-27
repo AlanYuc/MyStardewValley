@@ -73,6 +73,9 @@ public class Slot : MonoBehaviour,IPointerClickHandler
         }
     }
 
+    /// <summary>
+    /// 左键点击
+    /// </summary>
     private void LeftMouseClick()
     {
         if (BackpackSystem.Instance.palm.CheckNull())
@@ -87,15 +90,52 @@ public class Slot : MonoBehaviour,IPointerClickHandler
                 BackpackSystem.Instance.Pickup(this);
             }
         }
+        else
+        {
+            if(this.bindItem == null)
+            {
+                //手掌不为空，且格子是空的，可以放下，且是全部放下
+                BackpackSystem.Instance.PutAll(this);
+            }
+            else
+            {
+                //To do
+                //格子里有同类物品，有没有可用空间
+                //格子里有非同类物品，进行交换
+            }
+        }
     }
 
+    /// <summary>
+    /// 中键点击
+    /// </summary>
     private void MiddleMouseClick()
     {
-        
+        if(this.bindItem != null)
+        {
+            BackpackSystem.Instance.Use(this.bindItem);
+        }
     }
 
+    /// <summary>
+    /// 右键点击
+    /// </summary>
     private void RightMouseClick()
     {
-        
+        if (BackpackSystem.Instance.palm.CheckNull())
+        {
+            if(this.bindItem != null)
+            {
+                //手里空的，格子里有东西，直接拆分一半
+                BackpackSystem.Instance.SplitStack(this.bindItem);
+            }
+        }
+        else
+        {
+            //手里有东西，格子里无同类物品，无操作
+            //手里有东西，格子里有同类物品，格子的物品已满，无操作
+            //手里有东西，格子里有同类物品，格子的物品未满，放一个
+            BackpackSystem.Instance.PutOne(this);
+        }
     }
 }
