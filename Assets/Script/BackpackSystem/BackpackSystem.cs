@@ -231,4 +231,46 @@ public class BackpackSystem : MonoBehaviour
         slot.bindItem.BindSlot(palm.slotList[0]);
         slot.bindItem = null;
     }
+
+    /// <summary>
+    /// 放下全部物品
+    /// </summary>
+    /// <param name="targetSlot">需要放进的格子</param>
+    public void PutAll(Slot targetSlot)
+    {
+        Debug.Log("PutAll方法");
+
+        palm.slotList[0].bindItem.BindSlot(targetSlot);
+        palm.slotList[0].bindItem = null;
+    }
+
+    /// <summary>
+    /// 使用物品
+    /// </summary>
+    /// <param name="item"></param>
+    public void Use(Item item)
+    {
+        Debug.Log("Use方法");
+
+        //To do
+        Debug.Log("使用了物品");
+    }
+
+    /// <summary>
+    /// 拆分一半
+    /// </summary>
+    /// <param name="item"></param>
+    public void SplitStack(Item item)
+    {
+        Debug.Log("SplitStack方法");
+    }
+
+    /// <summary>
+    /// 放一个
+    /// </summary>
+    /// <param name="slot"></param>
+    public void PutOne(Slot slot)
+    {
+        Debug.Log("PutOne方法");
+    }
 }
