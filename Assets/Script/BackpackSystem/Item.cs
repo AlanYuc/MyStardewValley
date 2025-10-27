@@ -65,8 +65,8 @@ public class Item : MonoBehaviour
     public void SetItem(ItemData itemData, int quantity)
     {
         //添加数据
-        //this.itemData = itemData;
-        AddItemData(itemData);
+        this.itemData = itemData;
+        //AddItemData(itemData);
 
         //设置数量
         SetItemQuantity(quantity);

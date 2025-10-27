@@ -50,7 +50,7 @@ public class Slot : MonoBehaviour,IPointerClickHandler
         bindItem = item;
 
         //…Ë÷√ ˝æ›
-        item.SetItem(itemData, quantity);
+        item.SetItem(new ItemData(itemData), quantity);
     }
 
     /// <summary>

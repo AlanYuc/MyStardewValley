@@ -60,4 +60,23 @@ public class ItemData
     /// 物品的购入价格
     /// </summary>
     public int price;
+
+    public ItemData()
+    {
+
+    }
+    
+    public ItemData(ItemData itemData)
+    {
+        id = itemData.id;
+        name = itemData.name;
+        description = itemData.description;
+        isStackable = itemData.isStackable;
+        maxStack = itemData.maxStack;
+        curStack = itemData.curStack;
+        itemType = itemData.itemType;
+        iconName = itemData.iconName;
+        icon = itemData.icon;
+        price = itemData.price;
+    }
 }
