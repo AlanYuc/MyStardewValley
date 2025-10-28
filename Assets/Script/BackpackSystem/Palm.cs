@@ -90,4 +90,13 @@ public class Palm : InventoryContainer
         }
         return false;
     }
+
+    /// <summary>
+    /// 清空手上的物品
+    /// </summary>
+    public void ClearItem()
+    {
+        Destroy(slotList[0].bindItem.gameObject);
+        slotList[0].bindItem = null;
+    }
 }
