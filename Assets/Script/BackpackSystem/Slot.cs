@@ -99,9 +99,11 @@ public class Slot : MonoBehaviour,IPointerClickHandler
             }
             else
             {
-                //To do
                 //格子里有同类物品，有没有可用空间
                 //格子里有非同类物品，进行交换
+
+                BackpackSystem.Instance.ExchangeOrMergeForClick(
+                    BackpackSystem.Instance.palm.slotList[0], this);
             }
         }
     }
