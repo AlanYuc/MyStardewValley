@@ -60,6 +60,13 @@ public class Item : MonoBehaviour
 
         //数量等于1 就不显示文本
         _quantity.text = this.itemData.curStack > 1 ? quantity.ToString() : "";
+
+        //数量为0时销毁
+        if (this.itemData == null || this.itemData.curStack == 0)
+        {
+            Debug.Log("销毁物品");
+            Destroy(gameObject);
+        }
     }
 
     public void SetItem(ItemData itemData, int quantity)
@@ -70,13 +77,6 @@ public class Item : MonoBehaviour
 
         //设置数量
         SetItemQuantity(quantity);
-
-        //数量为0时销毁
-        if (this.itemData == null || this.itemData.curStack == 0)
-        {
-            Debug.Log("销毁物品");
-            Destroy(gameObject);
-        }
 
         //设置图片
         _icon.sprite = this.itemData.icon;
