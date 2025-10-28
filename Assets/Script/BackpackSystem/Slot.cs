@@ -34,7 +34,7 @@ public class Slot : MonoBehaviour,IPointerClickHandler
     }
 
     /// <summary>
-    /// 添加item
+    /// 想空的格子添加item
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="quantity"></param>
@@ -50,6 +50,7 @@ public class Slot : MonoBehaviour,IPointerClickHandler
         bindItem = item;
 
         //设置数据
+        //使用new创建一个新的ItemDatas数据，否则会一直使用之前的itemData的引用
         item.SetItem(new ItemData(itemData), quantity);
     }
 
