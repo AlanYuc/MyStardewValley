@@ -263,6 +263,18 @@ public class BackpackSystem : MonoBehaviour
     public void SplitStack(Item item)
     {
         Debug.Log("SplitStack方法");
+
+        //拿起的item数量
+        int pickupAmount = (int)MathF.Ceiling(item.itemData.curStack / 2.0f);
+
+        //剩余的item数量
+        int surplusAmount = item.itemData.curStack - pickupAmount;
+
+        //手掌拿起物品
+        palm.slotList[0].AddItem(new ItemData(item.itemData), pickupAmount);
+
+        //更新原物品数量(顺序不可修改，需要在palm拿起物品后修改)
+        item.SetItemQuantity(surplusAmount);
     }
 
     /// <summary>
@@ -272,5 +284,96 @@ public class BackpackSystem : MonoBehaviour
     public void PutOne(Slot slot)
     {
         Debug.Log("PutOne方法");
+    }
+
+    /// <summary>
+    /// 交换或合并item（点击）
+    /// </summary>
+    /// <param name="palmSlot"></param>
+    /// <param name="targetSlot"></param>
+    public void ExchangeOrMergeForClick(Slot palmSlot, Slot targetSlot)
+    {
+        Debug.Log("ExchangeOrMergeForClick方法");
+
+        if(palmSlot.bindItem.itemData.id == targetSlot.bindItem.itemData.id)
+        {
+            //item的id相同
+            //尝试合并
+            MergeForClick(palmSlot, targetSlot);
+        }
+        else
+        {
+            //item的id不同
+            //交换物品
+            ExchangeForClick(palmSlot, targetSlot);
+        }
+    }
+
+    /// <summary>
+    /// 合并item（点击）
+    /// </summary>
+    /// <param name="palmSlot"></param>
+    /// <param name="targetSlot"></param>
+    private void MergeForClick(Slot palmSlot, Slot targetSlot)
+    {
+        //获取引用
+        ItemData targetItemData = targetSlot.bindItem.itemData;
+        ItemData palmItemData = palmSlot.bindItem.itemData;
+
+        //获取可以合并的数量
+        int availStack = targetItemData.maxStack - targetItemData.curStack;
+
+        //判断是否可以合并
+        if(availStack > 0)
+        {
+            Debug.Log("可以进行合并");
+
+            //比较可合并数量和手掌的物品数量，判断手掌可以合并多少
+            if(availStack >= palmItemData.curStack)
+            {
+                //手掌的物品可以全部合并
+
+                int total = targetItemData.curStack + palmItemData.curStack;
+
+                targetSlot.bindItem.SetItemQuantity(total);
+
+                palm.ClearItem();
+            }
+            else
+            {
+                //手掌的物品只能合并部分，还有剩余
+
+                int surplus = palmItemData.curStack - availStack;
+
+                targetSlot.bindItem.SetItemQuantity(targetItemData.maxStack);
+
+                palmSlot.bindItem.SetItemQuantity(surplus);
+            }
+        }
+        else
+        {
+            Debug.Log("目标格子已满，无法合并");
+        }
+    }
+
+    /// <summary>
+    /// 交换item（点击）
+    /// </summary>
+    /// <param name="palmSlot"></param>
+    /// <param name="targetSlot"></param>
+    private void ExchangeForClick(Slot palmSlot, Slot targetSlot)
+    {
+        //备份palmSlot的item
+        ItemData itemData = palmSlot.bindItem.itemData;
+
+        //清空palmSlot的item
+        Destroy(palmSlot.bindItem.gameObject);
+        palmSlot.bindItem = null;
+
+        //将targetSlot的item绑定到palmSlot下
+        targetSlot.bindItem.BindSlot(palmSlot);
+
+        //将备份的item绑定到targetSlot下
+        targetSlot.AddItem(itemData, itemData.curStack);
     }
 }
