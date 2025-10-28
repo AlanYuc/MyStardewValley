@@ -280,10 +280,46 @@ public class BackpackSystem : MonoBehaviour
     /// <summary>
     /// 放一个
     /// </summary>
-    /// <param name="slot"></param>
-    public void PutOne(Slot slot)
+    /// <param name="targetSlot"></param>
+    public void PutOne(Slot targetSlot)
     {
         Debug.Log("PutOne方法");
+
+        //获取引用
+        Slot palmSlot = palm.slotList[0];
+
+        if (targetSlot.bindItem != null)
+        {
+            if(targetSlot.bindItem.itemData.id == palmSlot.bindItem.itemData.id)
+            {
+                //相同物品，进行合并
+                int availStack = targetSlot.bindItem.itemData.maxStack - targetSlot.bindItem.itemData.curStack;
+
+                if(availStack > 0)
+                {
+                    //目标格子中的item数量+1
+                    targetSlot.bindItem.SetItemQuantity(targetSlot.bindItem.itemData.curStack + 1);
+                    //手上格子中的item数量-1
+                    palmSlot.bindItem.SetItemQuantity(palmSlot.bindItem.itemData.curStack - 1);
+                }
+                else
+                {
+                    Debug.Log("目标位置物品已满，无法操作");
+                }
+            }
+            else
+            {
+                //不同物品，无操作
+                Debug.Log("目标位置有其他物品，无法操作");
+            }
+        }
+        else
+        {
+            //目标位置是空的，可以直接放一个item
+            //这里targetSlot.bindItem是空的，所以不能通过targetSlot.bindItem来获取itemData
+            targetSlot.AddItem(palmSlot.bindItem.itemData, 1);
+            palmSlot.bindItem.SetItemQuantity(palmSlot.bindItem.itemData.curStack - 1);
+        }
     }
 
     /// <summary>
