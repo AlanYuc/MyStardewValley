@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     /// <summary>
     /// ÒÆ¶¯ËÙ¶È
     /// </summary>
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         _rb     = GetComponent<Rigidbody2D>();
         _anim   = GetComponent<Animator>();
     }
