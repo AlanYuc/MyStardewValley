@@ -30,6 +30,10 @@ public class BackpackSystem : MonoBehaviour
     /// </summary>
     public GameObject itemPrefab;
     /// <summary>
+    /// 可拾取物品预制体
+    /// </summary>
+    public GameObject collectPrefab;
+    /// <summary>
     /// 记录鼠标拖拽开始的slot
     /// </summary>
     public Slot lastSlot;
@@ -43,8 +47,9 @@ public class BackpackSystem : MonoBehaviour
         //初始化单例
         Instance = this;
 
-        slotPrefab = Resources.Load<GameObject>("Prefab/Slot");
-        itemPrefab = Resources.Load<GameObject>("Prefab/Item");
+        slotPrefab      = Resources.Load<GameObject>("Prefab/Slot");
+        itemPrefab      = Resources.Load<GameObject>("Prefab/Item");
+        collectPrefab   = Resources.Load<GameObject>("Prefab/CollectItem");
 
         //获取引用
         backpack = GetComponentInChildren<Backpack>();
@@ -204,7 +209,12 @@ public class BackpackSystem : MonoBehaviour
         }
 
         //5.还有多余的生成在脚下
-        //To do...
+        if (surplus > 0)
+        {
+            ItemData surplusItemData = new ItemData(itemData);
+            surplusItemData.curStack = surplus;
+            Discard(surplusItemData);
+        }
     }
 
     /// <summary>
@@ -504,5 +514,38 @@ public class BackpackSystem : MonoBehaviour
             palmSlot.bindItem.BindSlot(lastSlot);
             palmSlot.bindItem = null;
         }
+    }
+
+    /// <summary>
+    /// 丢弃物品，生成在玩家脚下
+    /// </summary>
+    /// <param name="itemData"></param>
+    public CollectItem Discard(ItemData itemData)
+    {
+        return CreateItemInWolrd(Player.Instance.transform.position, itemData, itemData.curStack, false);
+    }
+
+    /// <summary>
+    /// 在世界内生成item
+    /// 除了从背包中丢弃时，NPC,宝箱等生成道具都会用到
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="itemData"></param>
+    /// <param name="quantity"></param>
+    public CollectItem CreateItemInWolrd(Vector3 pos,ItemData itemData,int quantity,bool isAutoCollect)
+    {
+        GameObject go = Instantiate(collectPrefab, pos, Quaternion.identity);
+        CollectItem collectItem = go.GetComponent<CollectItem>();
+        collectItem.SetItemData(itemData, quantity, isAutoCollect);
+
+        return collectItem;
+    }
+
+    /// <summary>
+    /// 永久删除物品
+    /// </summary>
+    public void DeleteItem()
+    {
+        //To do
     }
 }

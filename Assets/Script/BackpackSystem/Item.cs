@@ -176,8 +176,9 @@ public class Item : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandle
         }
         else
         {
-            //To do 鼠标没有停在格子上，那就将item扔在地上
-
+            //鼠标没有停在格子上，那就将item扔在地上
+            BackpackSystem.Instance.Discard(new ItemData(itemData));
+            Destroy(gameObject);
         }
     }
 
