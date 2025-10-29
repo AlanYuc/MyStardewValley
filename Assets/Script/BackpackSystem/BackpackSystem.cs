@@ -29,6 +29,14 @@ public class BackpackSystem : MonoBehaviour
     /// 物品预制体
     /// </summary>
     public GameObject itemPrefab;
+    /// <summary>
+    /// 记录鼠标拖拽开始的slot
+    /// </summary>
+    public Slot lastSlot;
+    /// <summary>
+    /// 鼠标当前聚焦的格子
+    /// </summary>
+    public Slot focusSlot;
 
     private void Awake()
     {
@@ -411,5 +419,90 @@ public class BackpackSystem : MonoBehaviour
 
         //将备份的item绑定到targetSlot下
         targetSlot.AddItem(itemData, itemData.curStack);
+    }
+
+    /// <summary>
+    /// 交换或合并item（拖拽）
+    /// </summary>
+    /// <param name="palmSlot"></param>
+    /// <param name="targetSlot"></param>
+    public void ExchangeOrMergeForDrag(Slot palmSlot, Slot targetSlot)
+    {
+        Debug.Log("ExchangeOrMergeForDrag方法");
+
+        if (palmSlot.bindItem.itemData.id == targetSlot.bindItem.itemData.id)
+        {
+            //是同类，尝试合并
+
+            ExchangeForDrag(palmSlot, targetSlot);
+        }
+        else
+        {
+            //不是同类，进行交换
+            //拖拽的交换对象是拖拽起始和终点的两个格子，与点击交换有不同
+
+            //把拖拽终点格子上的item放到起点格子里
+            targetSlot.bindItem.BindSlot(lastSlot);
+            targetSlot.bindItem = null;
+
+            //把手上的item放到终点格子里，然后清空手里的
+            palmSlot.bindItem.BindSlot(targetSlot);
+            palmSlot.bindItem = null;
+        }
+    }
+
+    /// <summary>
+    /// 合并item（拖拽）
+    /// </summary>
+    /// <param name="palmSlot"></param>
+    /// <param name="targetSlot"></param>
+    private void ExchangeForDrag(Slot palmSlot, Slot targetSlot)
+    {
+        //获取引用
+        ItemData palmItemData = palmSlot.bindItem.itemData;
+        ItemData targetItemData = targetSlot.bindItem.itemData;
+
+        //获取可以合并的数量
+        int availStack = targetItemData.maxStack - targetItemData.curStack;
+
+        if(availStack > 0)
+        {
+            //格子未满，可以合并
+            Debug.Log("格子未满，可以合并");
+
+            if(availStack >= palmItemData.curStack)
+            {
+                //可以全部合并
+
+                int total = palmItemData.curStack + targetItemData.curStack;
+
+                targetSlot.bindItem.SetItemQuantity(total);
+
+                palm.ClearItem();
+            }
+            else
+            {
+                //只能合并部分
+
+                int surplus = palmItemData.curStack - availStack;
+
+                targetSlot.bindItem.SetItemQuantity(targetItemData.maxStack);
+
+                //两种方法
+                //1.先修改手上的数量，再放回起始格子
+                //2.先清空手上的item，再在起始格子重新生成一个
+                palm.ClearItem();
+                lastSlot.AddItem(targetItemData, surplus);
+            }
+        }
+        else
+        {
+            //格子已满，无法合并
+            Debug.Log("格子已满，无法合并");
+
+            //把手上的item放回去
+            palmSlot.bindItem.BindSlot(lastSlot);
+            palmSlot.bindItem = null;
+        }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
 /// 物品类
 /// 处理所有拖拽事件以及保存物品数据
 /// </summary>
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandler
 {
     /// <summary>
     /// 物品数据
@@ -115,5 +116,73 @@ public class Item : MonoBehaviour
         //重新双向绑定
         bindSlot = targetSlot;
         targetSlot.bindItem = this;
+    }
+
+    /// <summary>
+    /// 开始拖拽
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        //记录拖拽开始的格子
+        BackpackSystem.Instance.lastSlot = bindSlot;
+
+        Slot palmSlot = BackpackSystem.Instance.palm.slotList[0];
+
+        if (BackpackSystem.Instance.palm.CheckNull())
+        {
+            //手里是空的，可以开始拖拽
+
+            //断开旧绑定
+            //先后顺序不可变
+            bindSlot.bindItem = null;
+            bindSlot = null;
+
+            //设置父对象
+            transform.SetParent(palmSlot.transform);
+
+            //重新绑定
+            bindSlot = palmSlot;
+            bindSlot.bindItem = this;
+
+            //BindSlot(palmSlot);
+        }
+    }
+
+    /// <summary>
+    /// 结束拖拽
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Slot focusSlot = BackpackSystem.Instance.focusSlot;
+        Slot palmSlot = BackpackSystem.Instance.palm.slotList[0];
+
+        if (focusSlot != null)
+        {
+            //鼠标停在格子上
+
+            if (focusSlot.bindItem != null) 
+            {
+                //格子不是空的，需要判断类型，判断容量
+                BackpackSystem.Instance.ExchangeOrMergeForDrag(palmSlot, focusSlot);
+            }
+            else
+            {
+                //格子是空的，直接放下
+                BackpackSystem.Instance.PutAll(focusSlot);
+            }
+
+        }
+        else
+        {
+            //To do 鼠标没有停在格子上，那就将item扔在地上
+
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
     }
 }

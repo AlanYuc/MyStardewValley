@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 背包中的插槽脚本
 /// </summary>
-public class Slot : MonoBehaviour,IPointerClickHandler
+public class Slot : MonoBehaviour,IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
 {
     /// <summary>
     /// 插槽内对应的物品
@@ -140,5 +140,15 @@ public class Slot : MonoBehaviour,IPointerClickHandler
             //手里有东西，格子里有同类物品，格子的物品未满，放一个
             BackpackSystem.Instance.PutOne(this);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        BackpackSystem.Instance.focusSlot = this;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        BackpackSystem.Instance.focusSlot = null;
     }
 }
