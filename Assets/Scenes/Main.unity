@@ -1113,6 +1113,9 @@ MonoBehaviour:
   palm: {fileID: 0}
   slotPrefab: {fileID: 0}
   itemPrefab: {fileID: 0}
+  collectPrefab: {fileID: 0}
+  lastSlot: {fileID: 0}
+  focusSlot: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
