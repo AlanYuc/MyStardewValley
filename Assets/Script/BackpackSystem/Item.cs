@@ -10,7 +10,9 @@ using UnityEngine.UI;
 /// 物品类
 /// 处理所有拖拽事件以及保存物品数据
 /// </summary>
-public class Item : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandler
+public class Item : MonoBehaviour,
+    IBeginDragHandler, IEndDragHandler,IDragHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
     /// <summary>
     /// 物品数据
@@ -185,5 +187,19 @@ public class Item : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandle
     public void OnDrag(PointerEventData eventData)
     {
         
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //注意顺序，防止先显示之前残留的信息
+        BackpackSystem.Instance.tip.SetItemData(itemData);
+        BackpackSystem.Instance.tip.ShowTip();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //也要注意顺序，否则关闭前看到数据空了
+        BackpackSystem.Instance.tip.HideTip();
+        BackpackSystem.Instance.tip.SetItemData(null);
     }
 }
