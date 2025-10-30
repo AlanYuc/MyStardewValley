@@ -18,6 +18,14 @@ public class InventoryContainer : MonoBehaviour
     /// 插槽的父对象transform
     /// </summary>
     public Transform _slotListTrans;
+    /// <summary>
+    /// 容器的CanvasGroup组件
+    /// </summary>
+    public CanvasGroup _canvasGroup;
+    /// <summary>
+    /// 背包是否打开
+    /// </summary>
+    public bool isOpen = false;
 
     /// <summary>
     /// 背包初始化
@@ -25,6 +33,7 @@ public class InventoryContainer : MonoBehaviour
     /// <param name="count">初始的物品数量</param>
     public virtual void Initialize(int count)
     {
+        _canvasGroup = GetComponent<CanvasGroup>();
         _slotListTrans = transform.Find("SlotList");
 
         for (int i = 0; i < count; i++)
@@ -78,6 +87,8 @@ public class InventoryContainer : MonoBehaviour
     /// </summary>
     public void SortInventory()
     {
+        Debug.Log("SortInventory方法");
+
         Dictionary<int, ItemData> items = new Dictionary<int, ItemData>();
 
         //1.统计所有物品id和总数
@@ -108,8 +119,14 @@ public class InventoryContainer : MonoBehaviour
 
         //从小到大排序
         sortIDs.Sort((a, b) => a.CompareTo(b));
-        Debug.Log("排序列表中的id个数" + sortIDs.Count);
-        Debug.Log("排序列表中的第一个id" + sortIDs[0]);
+
+        //Debug.Log
+        if (sortIDs.Count > 0)
+        {
+            Debug.Log("排序列表中的id个数" + sortIDs.Count);
+            Debug.Log("排序列表中的第一个id" + sortIDs[0]);
+        }
+        
 
         //3.清空背包容器
         ClearAllSlot();
@@ -152,5 +169,29 @@ public class InventoryContainer : MonoBehaviour
                 slot.bindItem = null;
             }
         }
+    }
+
+    /// <summary>
+    /// 打开容器
+    /// </summary>
+    public void OpenContainer()
+    {
+        _canvasGroup.alpha = 1.0f;
+        _canvasGroup.interactable = true;
+        _canvasGroup.blocksRaycasts = true;
+
+        isOpen = true;
+    }
+
+    /// <summary>
+    /// 关闭容器
+    /// </summary>
+    public void CloseContainer()
+    {
+        _canvasGroup.alpha = 0.0f;
+        _canvasGroup.interactable = false;
+        _canvasGroup.blocksRaycasts = false;
+
+        isOpen = false;
     }
 }

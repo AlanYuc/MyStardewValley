@@ -22,6 +22,10 @@ public class BackpackSystem : MonoBehaviour
     /// </summary>
     public Palm palm;
     /// <summary>
+    /// tip的引用
+    /// </summary>
+    public Tip tip;
+    /// <summary>
     /// 插槽预制体
     /// </summary>
     public GameObject slotPrefab;
@@ -52,9 +56,10 @@ public class BackpackSystem : MonoBehaviour
         collectPrefab   = Resources.Load<GameObject>("Prefab/CollectItem");
 
         //获取引用
-        backpack = GetComponentInChildren<Backpack>();
-        toolbar = GetComponentInChildren<Toolbar>();
-        palm = GetComponentInChildren<Palm>();
+        backpack    = GetComponentInChildren<Backpack>();
+        toolbar     = GetComponentInChildren<Toolbar>();
+        palm        = GetComponentInChildren<Palm>();
+        tip         = GetComponentInChildren<Tip>();
 
         //初始化,背包和工具栏一行最多12个格子，手掌只有一个，该数值可以修改
         backpack.Initialize(12);
