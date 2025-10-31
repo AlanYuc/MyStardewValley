@@ -84,4 +84,22 @@ public class DataManager : MonoBehaviour
 
         return list;
     }
+
+    /// <summary>
+    /// 根据id获取ItemData
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public ItemData GetItemData(int id)
+    {
+        foreach(ItemData itemData in itemDataList)
+        {
+            if(itemData.id == id)
+            {
+                return itemData;
+            }
+        }
+
+        return null;
+    }
 }
