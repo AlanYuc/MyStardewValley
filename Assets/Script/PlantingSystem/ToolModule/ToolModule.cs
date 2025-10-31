@@ -5,14 +5,34 @@ using UnityEngine;
 
 public enum ToolType
 {
-    None, //空
-
-    Hoe, //锄头->耕地
-    Axe, //斧头->砍树
-    Pickaxe, //镐子->采石头
-    Scythe, //镰刀->割草
-    WateringCan, //浇水壶
-    FishingRod, //钓鱼竿
+    /// <summary>
+    /// 空
+    /// </summary>
+    None,
+    /// <summary>
+    /// 锄头->耕地
+    /// </summary>
+    Hoe,
+    /// <summary>
+    /// 斧头->砍树
+    /// </summary>
+    Axe,
+    /// <summary>
+    /// 镐子->采石头
+    /// </summary>
+    Pickaxe,
+    /// <summary>
+    /// 镰刀->割草
+    /// </summary>
+    Scythe,
+    /// <summary>
+    /// 浇水壶
+    /// </summary>
+    WateringCan,
+    /// <summary>
+    /// 钓鱼竿
+    /// </summary>
+    FishingRod, 
 }
 
 public class ToolModule : MonoBehaviour
@@ -45,9 +65,12 @@ public class ToolModule : MonoBehaviour
     /// </summary>
     public bool isNearWater = false;
 
+    public EnergyModule energyModule;
+
     private void Awake()
     {
         currentWateringCanCapacity = maxWateringCanCapacity;
+        energyModule = PhysiologicalSystem.Instance.energyModule;
     }
 
     // Start is called before the first frame update
@@ -78,6 +101,86 @@ public class ToolModule : MonoBehaviour
     /// </summary>
     private void TryUseTool()
     {
-        
+        //检查拿的是否是镰刀，不是镰刀再检查体力
+        if (currentTool != ToolType.Scythe && !energyModule.CheckEnough(energyCost)) 
+        {
+            
+            Debug.Log("体力不够，无法使用");
+            return;
+        }
+
+        //检查浇水壶，看水是否够用
+        if(currentTool == ToolType.WateringCan && currentWateringCanCapacity == 0)
+        {
+            Debug.Log("水不够了，无法使用");
+            return;
+        }
+
+        //开始行动
+        PerformToolAction();
+    }
+
+    /// <summary>
+    /// 使用工具
+    /// </summary>
+    private void PerformToolAction()
+    {
+        switch (currentTool)
+        {
+            case ToolType.None:
+                break;
+            case ToolType.Hoe:
+                break;
+            case ToolType.Axe:
+                break;
+            case ToolType.Pickaxe:
+                break;
+            case ToolType.Scythe:
+                break;
+            case ToolType.WateringCan:
+                break;
+            case ToolType.FishingRod:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateItem(Item item)
+    {
+        //当前的格子没有东西
+        if(item == null)
+        {
+            currentTool = ToolType.None;
+            return;
+        }
+
+        //判断传过来的物品名称，只有是工具的时候进行记录
+        //名称需要与itemData中的名称一致
+        switch (item.itemData.name)
+        {
+            case "锄头":
+                currentTool = ToolType.Hoe;
+                break;
+            case "镐":
+                currentTool = ToolType.Pickaxe;
+                break;
+            case "斧子":
+                currentTool = ToolType.Axe;
+                break;
+            case "镰刀":
+                currentTool = ToolType.Scythe;
+                break;
+            case "花洒":
+                currentTool = ToolType.WateringCan;
+                break;
+            case "鱼竿":
+                currentTool = ToolType.FishingRod;
+                break;
+            default:
+                currentTool = ToolType.None;
+                break;
+        }
+
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -83,5 +84,28 @@ public class Toolbar : InventoryContainer
 
         //更新UI 红框的位置
         _activeSlotRectTransform.anchoredPosition = activeSlotOriginPos + new Vector2(selectSlot * slotSpacing, 0);
+
+        //获取红框内的item
+        Item item = slotList[selectSlot].bindItem;
+
+        //切换item，通知各个模块(工具模块，种子模块等)
+        SwitchItem(item);
+    }
+
+    /// <summary>
+    /// 通知其他模块，切换到当前物品
+    /// </summary>
+    /// <param name="item"></param>
+    private void SwitchItem(Item item)
+    {
+        //工具模块 获取工具模块中选中的物品
+        PlantingSystem.Instance.toolModule.UpdateItem(item);
+
+        //种子模块
+        PlantingSystem.Instance.seedModule.UpdateItem(item);
+
+        //食物
+        //武器
+        //..
     }
 }
