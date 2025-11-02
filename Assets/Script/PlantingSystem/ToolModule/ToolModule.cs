@@ -42,14 +42,14 @@ public class ToolModule : MonoBehaviour
     /// </summary>
     public ToolType currentTool;
     /// <summary>
-    /// 工具的食用范围
+    /// 工具的使用范围
     /// </summary>
-    public float useRange = 0.4f;
+    public float useRange;
     /// <summary>
     /// 体力值消耗
     /// (割草不消耗)
     /// </summary>
-    public int energyCost = 5;
+    public int energyCost;
 
     /// <summary>
     /// 当前浇水壶的容量
@@ -59,7 +59,7 @@ public class ToolModule : MonoBehaviour
     /// 浇水壶的最大容量
     /// 10表示可以浇水10次
     /// </summary>
-    public int maxWateringCanCapacity = 10;
+    public int maxWateringCanCapacity;
     /// <summary>
     /// 玩家是否靠近水源
     /// </summary>
@@ -69,14 +69,17 @@ public class ToolModule : MonoBehaviour
 
     private void Awake()
     {
+        maxWateringCanCapacity = 10;
         currentWateringCanCapacity = maxWateringCanCapacity;
-        energyModule = PhysiologicalSystem.Instance.energyModule;
+        energyCost = 5;
+        useRange = 0.4f;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //不在awake中获取，防止energyModule为空
+        energyModule = PhysiologicalSystem.Instance.energyModule;
     }
 
     // Update is called once per frame
@@ -125,6 +128,29 @@ public class ToolModule : MonoBehaviour
     /// </summary>
     private void PerformToolAction()
     {
+        //射线检测
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
+            Player.Instance.transform.position,
+            GetMouseDirection(),
+            useRange //在限制范围内
+            );
+
+        //排除射线中检测到的玩家
+        RaycastHit2D hit = default;
+        foreach (RaycastHit2D h in hits)
+        {
+            if (h.collider.CompareTag("Player"))
+            {
+                continue;
+            }
+            hit = h;
+        }
+
+        if(hit.collider == null)
+        {
+            return;
+        }
+
         switch (currentTool)
         {
             case ToolType.None:
@@ -134,6 +160,11 @@ public class ToolModule : MonoBehaviour
             case ToolType.Axe:
                 break;
             case ToolType.Pickaxe:
+                if (hit.collider.CompareTag("Rock"))
+                {
+                    hit.collider.GetComponent<Rock>().Mine();
+                    ConsumeEnergy();
+                }
                 break;
             case ToolType.Scythe:
                 break;
@@ -144,6 +175,31 @@ public class ToolModule : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    /// <summary>
+    /// 消耗体力
+    /// </summary>
+    private void ConsumeEnergy()
+    {
+        energyModule.UseEnergy(energyCost);
+    }
+
+    /// <summary>
+    /// 获取鼠标相对玩家的方向方向
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetMouseDirection()
+    {
+        //鼠标的世界坐标
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //玩家的世界坐标
+        Vector3 playerPos = Player.Instance.transform.position;
+
+        Vector3 mouseDir = (mousePos - playerPos).normalized;
+
+        return mouseDir;
     }
 
     public void UpdateItem(Item item)
@@ -182,5 +238,6 @@ public class ToolModule : MonoBehaviour
                 break;
         }
 
+        Debug.Log("当前工具是：" + currentTool);
     }
 }
