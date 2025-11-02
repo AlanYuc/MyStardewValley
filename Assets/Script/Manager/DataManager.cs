@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEditor;
 
 public class DataManager : MonoBehaviour
 {
@@ -30,9 +31,13 @@ public class DataManager : MonoBehaviour
 
         //加载图集
         LoadAltas("Image/Items/springobjects", "item");
+        LoadAltas("Image/Items/tools", "tool");
+        LoadAltas("Image/Environment", "environment");
 
         //处理图集，把每个图片和它的名字保存到spriteDict的字典里
         AddToSpriteDict("item");
+        AddToSpriteDict("tool");
+        AddToSpriteDict("environment");
 
         //把图片icon注入到ItemData中
         foreach(ItemData itemData in itemDataList)
