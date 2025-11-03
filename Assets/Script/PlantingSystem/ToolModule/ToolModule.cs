@@ -167,6 +167,10 @@ public class ToolModule : MonoBehaviour
                 }
                 break;
             case ToolType.Scythe:
+                if (hit.collider.CompareTag("Weed"))
+                {
+                    hit.collider.GetComponent<Weed>().Mow();
+                }
                 break;
             case ToolType.WateringCan:
                 break;
