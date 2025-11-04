@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class Weed : MonoBehaviour
 {
-    
+    public SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +22,37 @@ public class Weed : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            SpriteRenderer _playerSpriteRenderer = collision.GetComponent<SpriteRenderer>();
+
+            if(_playerSpriteRenderer!=null && _spriteRenderer != null)
+            {
+                bool isPlayerBehind = collision.transform.position.y > this.transform.position.y;
+
+                _spriteRenderer.sortingOrder = isPlayerBehind ? 
+                    _playerSpriteRenderer.sortingOrder + 1 : _playerSpriteRenderer.sortingOrder - 1;
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (_spriteRenderer != null)
+            {
+                _spriteRenderer.sortingOrder = 0;
+            }
+        }
     }
 
     /// <summary>
