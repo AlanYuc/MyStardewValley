@@ -146,28 +146,46 @@ public class ToolModule : MonoBehaviour
             hit = h;
         }
 
-        if(hit.collider == null)
-        {
-            return;
-        }
+        //if(hit.collider == null)
+        //{
+        //    return;
+        //}
 
         switch (currentTool)
         {
             case ToolType.None:
                 break;
             case ToolType.Hoe:
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                SoilPlot soilPlot = PlantingSystem.Instance.CreateSoilPlot(mouseWorldPos);
+                if (soilPlot != null)
+                {
+                    ConsumeEnergy();
+                }
                 break;
             case ToolType.Axe:
+                //¿³Ê÷
+                if (hit.collider && hit.collider.CompareTag("Tree"))
+                {
+                    hit.collider.GetComponent<Tree>().Chop();
+                    ConsumeEnergy();
+                }
+                //¿³Ê÷Ö¦
+                else if (hit.collider && hit.collider.CompareTag("Branch"))
+                {
+                    hit.collider.GetComponent<Branch>().Chop();
+                    ConsumeEnergy();
+                }
                 break;
             case ToolType.Pickaxe:
-                if (hit.collider.CompareTag("Rock"))
+                if (hit.collider && hit.collider.CompareTag("Rock"))
                 {
                     hit.collider.GetComponent<Rock>().Mine();
                     ConsumeEnergy();
                 }
                 break;
             case ToolType.Scythe:
-                if (hit.collider.CompareTag("Weed"))
+                if (hit.collider && hit.collider.CompareTag("Weed"))
                 {
                     hit.collider.GetComponent<Weed>().Mow();
                 }
