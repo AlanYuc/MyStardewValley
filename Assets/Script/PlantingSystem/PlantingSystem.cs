@@ -169,4 +169,33 @@ public class PlantingSystem : MonoBehaviour
         Debug.Log("网格坐标:" + new Vector2Int(x, y));
         return new Vector2Int(x, y);
     }
+
+    /// <summary>
+    /// 尝试给土壤浇水
+    /// </summary>
+    /// <param name="mouseWorldPos"></param>
+    public bool WaterSoil(Vector3 mouseWorldPos)
+    {
+        Vector2Int gridPos = WorldToGrid(mouseWorldPos);
+
+        //判断鼠标位置是否在可开垦土地上
+        if (!IsPositionValid(gridPos))
+        {
+            return false;
+        }
+
+        GridCellData data = gridCellDatas[gridPos.x, gridPos.y];
+
+        //尚未开垦或者已经浇水的土壤无法浇水
+        if (!data.isPlowed || data.isWatered)
+        {
+            return false;
+        }
+
+        //可以浇水
+        gridCellDatas[gridPos.x, gridPos.y].isWatered = true;
+        activeSoilPlots[gridPos].Watered();
+
+        return true;
+    }
 }

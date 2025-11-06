@@ -73,6 +73,7 @@ public class ToolModule : MonoBehaviour
         currentWateringCanCapacity = maxWateringCanCapacity;
         energyCost = 5;
         useRange = 0.4f;
+        isNearWater = false;
     }
 
     // Start is called before the first frame update
@@ -96,6 +97,15 @@ public class ToolModule : MonoBehaviour
         {
             //尝试使用工具
             TryUseTool();
+        }
+
+        //拿着水桶靠近水源时，按E获取水
+        if(Input.GetKeyDown(KeyCode.E) && 
+            currentTool == ToolType.WateringCan &&
+            isNearWater)
+        {
+            Debug.Log("已将水补满");
+            currentWateringCanCapacity = maxWateringCanCapacity;
         }
     }
 
@@ -151,12 +161,14 @@ public class ToolModule : MonoBehaviour
         //    return;
         //}
 
+        //获取鼠标的世界坐标
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         switch (currentTool)
         {
             case ToolType.None:
                 break;
             case ToolType.Hoe:
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 SoilPlot soilPlot = PlantingSystem.Instance.CreateSoilPlot(mouseWorldPos);
                 if (soilPlot != null)
                 {
@@ -191,6 +203,13 @@ public class ToolModule : MonoBehaviour
                 }
                 break;
             case ToolType.WateringCan:
+                bool result = PlantingSystem.Instance.WaterSoil(mouseWorldPos);
+                if (result)
+                {
+                    //在TryUseTool中判断过当前水不够的情况
+                    currentWateringCanCapacity--;
+                    ConsumeEnergy();
+                }
                 break;
             case ToolType.FishingRod:
                 break;
