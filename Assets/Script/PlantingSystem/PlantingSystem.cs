@@ -166,7 +166,7 @@ public class PlantingSystem : MonoBehaviour
         int x = Mathf.FloorToInt((worldPos.x - gridOffset.x) / cellSize);
         int y = Mathf.FloorToInt((worldPos.y - gridOffset.y) / cellSize);
 
-        Debug.Log("网格坐标:" + new Vector2Int(x, y));
+        //Debug.Log("网格坐标:" + new Vector2Int(x, y));
         return new Vector2Int(x, y);
     }
 
@@ -195,6 +195,12 @@ public class PlantingSystem : MonoBehaviour
         //可以浇水
         gridCellDatas[gridPos.x, gridPos.y].isWatered = true;
         activeSoilPlots[gridPos].Watered();
+        
+        //如果有种子，那么种子就开始生长
+        if (activeSoilPlots[gridPos].plant != null)
+        {
+            activeSoilPlots[gridPos].plant.StartGrow();
+        }
 
         return true;
     }
@@ -290,7 +296,7 @@ public class PlantingSystem : MonoBehaviour
         SoilPlot soilPlot = activeSoilPlots[gridPos];
         //在背包中生成对象
         ItemData itemData = DataManager.Instance.itemDataList.Find(
-            itemData => itemData.seed_type == soilPlot.plant.seedData.seed_type);
+            data => data.seed_type == soilPlot.plant.seedData.seed_type);
         BackpackSystem.Instance.TryAddItem(itemData, 1);
 
         //取消土壤地块的植物关联
