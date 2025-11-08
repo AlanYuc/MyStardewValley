@@ -243,6 +243,10 @@ public class ToolModule : MonoBehaviour
         return mouseDir;
     }
 
+    /// <summary>
+    /// 接收工具栏中选中的物品
+    /// </summary>
+    /// <param name="item"></param>
     public void UpdateItem(Item item)
     {
         //当前的格子没有东西
