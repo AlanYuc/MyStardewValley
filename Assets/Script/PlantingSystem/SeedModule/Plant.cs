@@ -162,11 +162,18 @@ public class Plant : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// 设置种子数据
+    /// </summary>
+    /// <param name="seedData"></param>
     public void SetData(SeedData seedData)
     {
         this.seedData = new SeedData(seedData);
     }
 
+    /// <summary>
+    /// 种子开始生长
+    /// </summary>
     public void StartGrow()
     {
         isGrowing = true;
