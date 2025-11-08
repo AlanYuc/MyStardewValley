@@ -14,6 +14,10 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public List<ItemData> itemDataList = new List<ItemData>();
     /// <summary>
+    /// 所有SeedData的数据
+    /// </summary>
+    public List<SeedData> seedDataList = new List<SeedData>();
+    /// <summary>
     /// 物品图片icon的字典
     /// </summary>
     public Dictionary<string , Sprite> spriteDict = new Dictionary<string , Sprite>();
@@ -21,6 +25,10 @@ public class DataManager : MonoBehaviour
     /// 图集字典
     /// </summary>
     public Dictionary<string, Sprite[]> atlasDict = new Dictionary<string , Sprite[]>();
+    /// <summary>
+    /// 预制体字典
+    /// </summary>
+    public Dictionary<string , GameObject> prefabDict = new Dictionary<string , GameObject>();
 
     private void Awake()
     {
@@ -28,6 +36,7 @@ public class DataManager : MonoBehaviour
 
         //获取item的Json数据
         itemDataList = LoadJsonList<ItemData>("Data/ItemData");
+        seedDataList = LoadJsonList<SeedData>("Data/SeedData");
 
         //加载图集
         LoadAltas("Image/Items/springobjects", "item");
@@ -46,6 +55,13 @@ public class DataManager : MonoBehaviour
             {
                 itemData.icon = spriteDict[itemData.iconName];
             }
+        }
+
+        //拿到所有种子预制体，把预制体添加到字典
+        foreach(SeedData seedData in seedDataList)
+        {
+            GameObject go = Resources.Load<GameObject>("Prefab/Seed/" + seedData.prefab_name);
+            prefabDict.Add(seedData.prefab_name, go);
         }
     }
 
@@ -78,7 +94,6 @@ public class DataManager : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="path"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     private List<T> LoadJsonList<T>(string path)
     {
         //读取文本
