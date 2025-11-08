@@ -82,6 +82,7 @@ public class SeedModule : MonoBehaviour
         //不是种子
         if(item.itemData.itemType != ItemType.Seed)
         {
+            currentSeed = SeedType.None;
             return;
         }
 
