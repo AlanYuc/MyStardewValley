@@ -8,6 +8,10 @@ public class SoilPlot : MonoBehaviour
     /// 浇水后的土壤图片
     /// </summary>
     public GameObject _water;
+    /// <summary>
+    /// 该土壤地块上种植的植物
+    /// </summary>
+    public Plant plant;
 
     private void Awake()
     {
@@ -45,8 +49,23 @@ public class SoilPlot : MonoBehaviour
     /// <summary>
     /// 播种
     /// </summary>
-    public void PlantSeed()
+    public void PlantSeed(ItemData itemData)
     {
-        //To do
+        //根据ItemData信息找到对应的SeedData
+        SeedData seedData = DataManager.Instance.seedDataList.Find(
+            seed => seed.item_id == itemData.id
+            );
+
+        //拿到prefab
+        GameObject seedPrefab = DataManager.Instance.prefabDict[seedData.prefab_name];
+
+        //生成种子并拿到其引用
+        plant = Instantiate(seedPrefab, transform.position, Quaternion.identity, transform).GetComponent<Plant>();
+
+        //注入数据
+        plant.SetData(seedData);
+
+        //设置种子为第一阶段
+        plant.SetGrowthStage(1);
     }
 }

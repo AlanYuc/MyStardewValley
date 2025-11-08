@@ -61,6 +61,11 @@ public class ItemData
     /// </summary>
     public int price;
 
+    /// <summary>
+    /// 种子类型
+    /// </summary>
+    public SeedType seed_type;
+
     public ItemData()
     {
 
@@ -78,5 +83,6 @@ public class ItemData
         iconName = itemData.iconName;
         icon = itemData.icon;
         price = itemData.price;
+        seed_type = itemData.seed_type;
     }
 }

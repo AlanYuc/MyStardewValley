@@ -198,4 +198,102 @@ public class PlantingSystem : MonoBehaviour
 
         return true;
     }
+
+    public void TrySowSeed(Vector3 mouseWorldPos)
+    {
+        //是否在土壤范围内
+        Debug.Log("TrySowSeed");
+
+        //将鼠标的世界坐标转换成网格坐标
+        Vector2Int gridPos = WorldToGrid(mouseWorldPos);
+
+        ////判断鼠标位置是否在可开垦土地上
+        //if (!IsPositionValid(gridPos))
+        //{
+        //    return;
+        //}
+
+        ////土壤地块是否开垦
+        //if (!gridCellDatas[gridPos.x,gridPos.y].isPlowed)
+        //{
+        //    return;
+        //}
+
+        //两个步骤二合一
+        if (!activeSoilPlots.ContainsKey(gridPos))
+        {
+            return;
+        }
+
+        //是否已经种了种子
+        if(!!gridCellDatas[gridPos.x, gridPos.y].isPlanted)
+        {
+            return; 
+        }
+
+        //记录并更新相关信息
+        gridCellDatas[gridPos.x,gridPos.y].isPlanted = true;
+
+        //更新工具栏中的种子数量
+        Toolbar toolbar = BackpackSystem.Instance.toolbar;
+        Item item = toolbar.slotList[toolbar.selectSlot].bindItem;
+        if(item == null || item.itemData == null)
+        {
+            Debug.Log("没有获取item或item.itemData");
+            return;
+        }
+
+        //调用SoilPlot中的种植方法
+        activeSoilPlots[gridPos].PlantSeed(item.itemData);
+
+        item.SetItemQuantity(item.itemData.curStack - 1);
+
+        //种子数量清零后，把种子模块中的当前种子类型清空，防止在没有种子的情况下继续种植
+        if (item == null || item.itemData.curStack == 0) 
+        {
+            seedModule.UpdateItem(null);
+        }
+    }
+
+    /// <summary>
+    /// 检测当前位置的土壤地块是否浇水
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public bool CheckWater(Vector3 position)
+    {
+        Vector2Int gridPos = WorldToGrid(position);
+
+        return gridCellDatas[gridPos.x, gridPos.y].isWatered;
+    }
+
+    /// <summary>
+    /// 水变干
+    /// </summary>
+    /// <param name="position"></param>
+    public void WaterDry(Vector3 position)
+    {
+        Vector2Int gridPos = WorldToGrid(position);
+        gridCellDatas[gridPos.x, gridPos.y].isWatered = false;
+        activeSoilPlots[gridPos].Dry();
+    }
+
+    /// <summary>
+    /// 收获作物
+    /// </summary>
+    /// <param name="position"></param>
+    public void Harvest(Vector3 position)
+    {
+        Vector2Int gridPos = WorldToGrid(position);
+        gridCellDatas[gridPos.x, gridPos.y].isPlanted = false;
+
+        SoilPlot soilPlot = activeSoilPlots[gridPos];
+        //在背包中生成对象
+        ItemData itemData = DataManager.Instance.itemDataList.Find(
+            itemData => itemData.seed_type == soilPlot.plant.seedData.seed_type);
+        BackpackSystem.Instance.TryAddItem(itemData, 1);
+
+        //取消土壤地块的植物关联
+        soilPlot.plant = null;
+    }
 }
