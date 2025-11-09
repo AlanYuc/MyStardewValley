@@ -31,12 +31,21 @@ public class Player : MonoBehaviour
     /// </summary>
     public Animator _anim;
 
+    /// <summary>
+    /// 玩家走路特效
+    /// </summary>
+    public GameObject walkEffect;
+    public float walkEffectOffset;
+
     private void Awake()
     {
         Instance = this;
 
         _rb     = GetComponent<Rigidbody2D>();
         _anim   = GetComponent<Animator>();
+        walkEffect = transform.Find("WalkEffect").gameObject;
+
+        walkEffectOffset = 0.2f;
     }
 
     // Start is called before the first frame update
@@ -70,10 +79,13 @@ public class Player : MonoBehaviour
         if(movementDir == Vector2.zero)
         {
             isMove = false;
+            walkEffect.SetActive(false);
         }
         else
         {
             isMove= true;
+            walkEffect.SetActive(true);
+            SetWalkEffectPosition(movementDir);
         }
 
         //将参数赋值到animator
@@ -86,5 +98,13 @@ public class Player : MonoBehaviour
             _anim.SetFloat("LastHorizontal", lastMovementDir.x);
             _anim.SetFloat("LastVertical", lastMovementDir.y);
         }
+    }
+
+    public void SetWalkEffectPosition(Vector2 movementDir)
+    {
+        walkEffect.transform.position =
+            transform.position +
+            new Vector3(0, 0.2f, 0) -
+            new Vector3(movementDir.x * walkEffectOffset, movementDir.y * walkEffectOffset, 0);
     }
 }
