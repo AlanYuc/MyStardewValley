@@ -32,10 +32,13 @@ public class Item : MonoBehaviour,
     /// </summary>
     public Slot bindSlot;
 
+    public RectTransform _rectTransform;
+
     private void Awake()
     {
         _icon       = transform.Find("Icon").GetComponent<Image>();
         _quantity   = transform.Find("Quantity").GetComponent<TMP_Text>();
+        _rectTransform = GetComponent<RectTransform>();
 
         _icon.sprite = null;
         _quantity.text = "";
@@ -194,6 +197,9 @@ public class Item : MonoBehaviour,
         //注意顺序，防止先显示之前残留的信息
         BackpackSystem.Instance.tip.SetItemData(itemData);
         BackpackSystem.Instance.tip.ShowTip();
+
+        //放大item的icon
+        StartCoroutine(ScaleOverTime(1.2f, 0.2f));
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -201,5 +207,29 @@ public class Item : MonoBehaviour,
         //也要注意顺序，否则关闭前看到数据空了
         BackpackSystem.Instance.tip.HideTip();
         BackpackSystem.Instance.tip.SetItemData(null);
+
+        //缩小item的icon
+        StartCoroutine(ScaleOverTime(1, 0.2f));
+    }
+
+    public IEnumerator ScaleOverTime(float targetScale, float time)
+    {
+        float scaleTimer = 0;
+
+        Vector3 originScale = _rectTransform.localScale;
+        Vector3 targetScaleV3 = Vector3.one * targetScale;
+
+        while(scaleTimer < time)
+        {
+            _rectTransform.localScale = Vector3.Lerp(
+                _rectTransform.localScale,
+                targetScaleV3,
+                scaleTimer / time);
+
+            scaleTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        _rectTransform.localScale = targetScaleV3;
     }
 }
