@@ -294,7 +294,6 @@ public class TimeSystem : MonoBehaviour
     /// </summary>
     private void UpdateTimeUI()
     {
-        int weekday = currentDay % 7;
         _timeText.text = currentHour.ToString("D2") + ":" + currentMinute.ToString("D2");
         if (weekday > 7)
         {
