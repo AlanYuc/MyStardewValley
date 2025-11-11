@@ -212,6 +212,12 @@ public class Item : MonoBehaviour,
         StartCoroutine(ScaleOverTime(1, 0.2f));
     }
 
+    /// <summary>
+    /// item大小变化
+    /// </summary>
+    /// <param name="targetScale"></param>
+    /// <param name="time"></param>
+    /// <returns></returns>
     public IEnumerator ScaleOverTime(float targetScale, float time)
     {
         float scaleTimer = 0;

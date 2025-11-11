@@ -26,6 +26,10 @@ public class BackpackSystem : MonoBehaviour
     /// </summary>
     public Tip tip;
     /// <summary>
+    /// 储物箱背包的引用
+    /// </summary>
+    public StorageBoxUI storageBox;
+    /// <summary>
     /// 插槽预制体
     /// </summary>
     public GameObject slotPrefab;
@@ -60,11 +64,13 @@ public class BackpackSystem : MonoBehaviour
         toolbar     = GetComponentInChildren<Toolbar>();
         palm        = GetComponentInChildren<Palm>();
         tip         = GetComponentInChildren<Tip>();
+        storageBox  = GetComponentInChildren<StorageBoxUI>();
 
         //初始化,背包和工具栏一行最多12个格子，手掌只有一个，该数值可以修改
         backpack.Initialize(12);
         toolbar.Initialize(12);
         palm.Initialize(1);
+        storageBox.Initialize(36);
     }
 
     // Start is called before the first frame update

@@ -157,7 +157,7 @@ public class InventoryContainer : MonoBehaviour
     /// <summary>
     /// 清空所有格子
     /// </summary>
-    private void ClearAllSlot()
+    public void ClearAllSlot()
     {
         Debug.Log("ClearAllSlot方法");
 
@@ -169,6 +169,32 @@ public class InventoryContainer : MonoBehaviour
                 slot.bindItem = null;
             }
         }
+    }
+
+    /// <summary>
+    /// 获取当前背包的所有ItemData数据，空的格子ItemData为空
+    /// </summary>
+    /// <returns></returns>
+    public List<ItemData> GetItemDataToList()
+    {
+        List<ItemData> result = new List<ItemData>();
+
+        //遍历所有slot
+        foreach(Slot slot in slotList)
+        {
+            //格子有数据
+            if(slot.bindItem != null)
+            {
+                result.Add(new ItemData(slot.bindItem.itemData));
+            }
+            //格子是空的
+            else
+            {
+                result.Add(null);
+            }
+        }
+
+        return result;
     }
 
     /// <summary>
