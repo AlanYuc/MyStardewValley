@@ -46,6 +46,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26232ce31da1c441b524c4dce777300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seedData:
+    id: 0
+    item_id: 0
+    name: 
+    prefab_name: 
+    state_count: 0
+    timePerStage: 
+    seed_type: 0
+  currentStage: 0
+  growthTimer: 0
+  timePerStage: 0
+  stageSprite:
+  - {fileID: -1216812850, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: 1890284116, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: -268905157, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: 964170375, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: -1297629536, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: -368142893, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  - {fileID: -1214368815, guid: 0394cb6f76b40584ba00774e5c8fbee4, type: 3}
+  _spriteRenderer: {fileID: 0}
+  isGrowing: 0
+  isMature: 0
+  isNearPlayer: 0
 --- !u!212 &6608320288899799514
 SpriteRenderer:
   m_ObjectHideFlags: 0
