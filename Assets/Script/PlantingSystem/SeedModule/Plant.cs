@@ -95,10 +95,13 @@ public class Plant : MonoBehaviour
         if(currentStage < seedData.state_count)
         {
             //当前种子未达到最终阶段，那么继续生长
-            growthTimer += Time.deltaTime;
+            //需要跟时间系统保持一致，晚上的时候需要加速
+            growthTimer += Time.deltaTime * TimeSystem.Instance.timeScale;
 
             //经过一个生长阶段，开始进入下一个阶段
-            if(growthTimer >= timePerStage)
+            //growthTimer和timePerStage分别乘了timeScale和staticTimeScale
+            //都将现实时间转成游戏内时间，并且在夜晚产生时间差，实现加速生长
+            if (growthTimer >= timePerStage)
             {
                 growthTimer = 0;
 
@@ -134,7 +137,10 @@ public class Plant : MonoBehaviour
         //切换到下一阶段
         if (currentStage <= seedData.timePerStage.Count)
         {
-            timePerStage = seedData.timePerStage[currentStage - 1];//list下标减一   
+            //获取当前阶段所需的生长时间
+            timePerStage = seedData.timePerStage[currentStage - 1];//list下标减一
+            //将时间转换为游戏内时间 需要静态的staticTimeScale
+            timePerStage *= TimeSystem.Instance.staticTimeScale;
         }
 
         UpdateSprite();
