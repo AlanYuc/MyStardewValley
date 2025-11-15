@@ -301,4 +301,9 @@ public class TimeSystem : MonoBehaviour
         }
         _dateText.text = currentDay.ToString() + "ÈÕ " + "ÐÇÆÚ" + weekday;
     }
+
+    public void LoadGame(SaveData saveData)
+    {
+        
+    }
 }

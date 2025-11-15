@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -106,5 +107,10 @@ public class Player : MonoBehaviour
             transform.position +
             new Vector3(0, 0.2f, 0) -
             new Vector3(movementDir.x * walkEffectOffset, movementDir.y * walkEffectOffset, 0);
+    }
+
+    public void LoadGame(SaveData saveData)
+    {
+        
     }
 }

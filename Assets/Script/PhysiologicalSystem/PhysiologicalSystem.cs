@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,5 +29,10 @@ public class PhysiologicalSystem : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void LoadGame(SaveData saveData)
+    {
+
     }
 }

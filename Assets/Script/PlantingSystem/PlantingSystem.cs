@@ -302,4 +302,9 @@ public class PlantingSystem : MonoBehaviour
         //取消土壤地块的植物关联
         soilPlot.plant = null;
     }
+
+    public void LoadGame(SaveData saveData)
+    {
+        
+    }
 }
