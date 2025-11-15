@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public class GridCellData
 {
+    //土壤相关
+
     /// <summary>
     /// 是否开垦
     /// </summary>
@@ -18,4 +20,27 @@ public class GridCellData
     /// 是否种植
     /// </summary>
     public bool isPlanted = false;
+
+    //种植相关
+
+    /// <summary>
+    /// 作物id
+    /// </summary>
+    public int plant_id = -1;
+    /// <summary>
+    /// 计时器
+    /// </summary>
+    public float timer = 0;
+    /// <summary>
+    /// 当前生长阶段
+    /// </summary>
+    public int current_state = 0;
+    /// <summary>
+    /// 是否可以生长
+    /// </summary>
+    public bool isGrowing = false;
+    /// <summary>
+    /// 是否成熟
+    /// </summary>
+    public bool isMature=false;
 }
