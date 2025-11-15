@@ -94,7 +94,8 @@ public class CreatePanel : BasePanel
     public void OnOkButtonClick()
     {
         //保存数据，创建新存档，跳转到游戏场景
-        SceneManager.LoadScene("Main");
+        SaveSystem.Instance.CreateNewArchive();
+        //SceneManager.LoadScene("Main");
     }
 
     public void OnBackButtonClick()
