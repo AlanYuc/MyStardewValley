@@ -31,4 +31,9 @@ public class EnvironmentSystem : MonoBehaviour
     {
         
     }
+
+    public EnvironmentSaveData SaveGame()
+    {
+        return null;
+    }
 }

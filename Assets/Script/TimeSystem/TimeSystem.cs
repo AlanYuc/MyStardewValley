@@ -306,4 +306,9 @@ public class TimeSystem : MonoBehaviour
     {
         
     }
+
+    public TimeSaveData SaveGame()
+    {
+        return null;
+    }
 }

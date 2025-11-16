@@ -33,8 +33,24 @@ public class TradeSystem : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 加载游戏金币数量
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
+        coinModule.SetCoin(saveData.tradeSaveData.coins);
+    }
 
+    /// <summary>
+    /// 保存游戏金币数量
+    /// </summary>
+    /// <returns></returns>
+    public TradeSaveData SaveGame()
+    {
+        TradeSaveData tradeSaveData = new TradeSaveData();
+        tradeSaveData.coins = coinModule.currentCoin;
+
+        return tradeSaveData;
     }
 }

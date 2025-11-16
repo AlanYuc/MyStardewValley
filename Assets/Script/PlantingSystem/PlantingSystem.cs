@@ -307,4 +307,9 @@ public class PlantingSystem : MonoBehaviour
     {
         
     }
+
+    public PlantSaveData SaveGame()
+    {
+        return null;
+    }
 }

@@ -31,8 +31,24 @@ public class PhysiologicalSystem : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 加载 玩家的生理系统数据
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
+        energyModule.SetEnergy(saveData.physiologicalSaveData.energy);
+    }
 
+    /// <summary>
+    /// 保存 玩家的生理系统数据
+    /// </summary>
+    /// <returns></returns>
+    public PhysiologicalSaveData SaveGame()
+    {
+        PhysiologicalSaveData physiologicalSaveData = new PhysiologicalSaveData();
+        physiologicalSaveData.energy = energyModule.currentEnergy;
+
+        return physiologicalSaveData;
     }
 }

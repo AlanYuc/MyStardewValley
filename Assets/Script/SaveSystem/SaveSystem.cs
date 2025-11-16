@@ -57,6 +57,15 @@ public class SaveSystem : MonoBehaviour
     }
 
     /// <summary>
+    /// 加载存档
+    /// </summary>
+    /// <param name="saveData"></param>
+    public void LoadArchive(SaveData saveData)
+    {
+        SwitchSceneAndLoadGame(saveData);
+    }
+
+    /// <summary>
     /// 切换到游戏场景，并且加载游戏
     /// </summary>
     /// <param name="saveData"></param>
@@ -126,5 +135,26 @@ public class SaveSystem : MonoBehaviour
         }
 
         return saveDataList;
+    }
+
+    /// <summary>
+    /// 保存存档 - 将数据写入到文件当中
+    /// 睡觉时自动保存，因此由时间系统调用
+    /// </summary>
+    public void SaveGame()
+    {
+        SaveData saveData = new SaveData();
+
+        //通知各个系统加载数据
+        saveData.playerSaveData         = Player.Instance.SaveGame();//玩家
+        saveData.timeSaveData           = TimeSystem.Instance.SaveGame();//时间系统
+        saveData.backpackSaveData       = BackpackSystem.Instance.SaveGame();//背包系统
+        saveData.tradeSaveData          = TradeSystem.Instance.SaveGame();//交易系统
+        saveData.physiologicalSaveData  = PhysiologicalSystem.Instance.SaveGame();//生理系统
+        saveData.plantSaveData          = PlantingSystem.Instance.SaveGame();//种植系统
+        saveData.environmentSaveData    = EnvironmentSystem.Instance.SaveGame();//环境系统
+
+        //写入本地
+        SaveWriteFile(saveData);
     }
 }

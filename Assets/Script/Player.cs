@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -37,6 +38,29 @@ public class Player : MonoBehaviour
     /// </summary>
     public GameObject walkEffect;
     public float walkEffectOffset;
+
+    //玩家信息
+
+    /// <summary>
+    /// 玩家名称
+    /// </summary>
+    public string playerName;
+    /// <summary>
+    /// 农场名称
+    /// </summary>
+    public string farmName;
+    /// <summary>
+    /// 玩家最喜欢的物品名称
+    /// </summary>
+    public string favoriteName;
+    /// <summary>
+    /// 经验值
+    /// </summary>
+    public int exp;
+    /// <summary>
+    /// 等级
+    /// </summary>
+    public int level;
 
     private void Awake()
     {
@@ -109,8 +133,43 @@ public class Player : MonoBehaviour
             new Vector3(movementDir.x * walkEffectOffset, movementDir.y * walkEffectOffset, 0);
     }
 
+    /// <summary>
+    /// 加载玩家数据
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
-        
+        //更新位置
+        Vector3 position = new Vector3();
+        position.x = saveData.playerSaveData.player_pos_x;
+        position.y = saveData.playerSaveData.player_pos_y;
+        position.z = saveData.playerSaveData.player_pos_z;
+        transform.position = position;
+
+        //更新数据
+        playerName = saveData.playerSaveData.player_name;
+        farmName = saveData.playerSaveData.farm_name;
+        favoriteName = saveData.playerSaveData.favorite;
+        exp = saveData.playerSaveData.exp;
+        level = saveData.playerSaveData.level;
+    }
+
+    /// <summary>
+    /// 保存玩家数据
+    /// </summary>
+    /// <returns></returns>
+    public PlayerSaveData SaveGame()
+    {
+        PlayerSaveData playerSaveData = new PlayerSaveData();
+        playerSaveData.player_pos_x = transform.position.x;
+        playerSaveData.player_pos_y = transform.position.y;
+        playerSaveData.player_pos_z = transform.position.z;
+        playerSaveData.player_name = playerName;
+        playerSaveData.farm_name = farmName;
+        playerSaveData.favorite = favoriteName;
+        playerSaveData.exp = exp;
+        playerSaveData.level = level;
+
+        return playerSaveData;
     }
 }
