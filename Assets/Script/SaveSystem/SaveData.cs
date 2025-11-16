@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 [Serializable]
 public class SaveData
@@ -155,10 +156,10 @@ public class PlantSaveData
 public class EnvironmentSaveData
 {
     /// <summary>
-    /// 场景内的环境物体
+    /// 无状态物品 场景内的环境物体
     /// 保存的是物品id，以及该id的所有物品
     /// </summary>
-    public Dictionary<int, List<EasyData>> stateless_objects = new Dictionary<int, List<EasyData>>();
+    public Dictionary<int, List<EasyData>> stateless_objects = new FlexibleDictionary<int, List<EasyData>>();
 }
 
 /// <summary>
