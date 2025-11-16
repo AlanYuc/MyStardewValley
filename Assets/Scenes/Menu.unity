@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1711471663}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -1893,6 +1893,7 @@ MonoBehaviour:
   isOpen: 0
   _backButton: {fileID: 0}
   _loadContent: {fileID: 0}
+  loadItem: {fileID: 0}
 --- !u!1 &782537138
 GameObject:
   m_ObjectHideFlags: 0
