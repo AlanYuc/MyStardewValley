@@ -63,6 +63,19 @@ public class DataManager : MonoBehaviour
             GameObject go = Resources.Load<GameObject>("Prefab/Seed/" + seedData.prefab_name);
             prefabDict.Add(seedData.prefab_name, go);
         }
+
+        //加载预制体映射表中的所有对象
+        TextAsset prefabMappingJson = Resources.Load<TextAsset>("Data/PrefabMapping");
+        Dictionary<int, string> prefabMappingDict = JsonConvert.DeserializeObject<Dictionary<int, string>>(prefabMappingJson.text);
+
+        foreach(KeyValuePair<int, string> keyValuePair in prefabMappingDict)
+        {
+            GameObject go = Resources.Load<GameObject>(keyValuePair.Value);
+            
+            //这里直接按照id保存即可，方便后续按照id查找
+            prefabDict.Add(keyValuePair.Key.ToString(), go);
+            //prefabDict.Add(go.name, go);
+        }
     }
 
     /// <summary>
