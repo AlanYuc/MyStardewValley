@@ -186,7 +186,12 @@ public class DiscardItemData
     public float x;
     public float y;
     public float z;
+
     public ItemData item_data = new ItemData();
+    /// <summary>
+    /// 是否自动拾取
+    /// </summary>
+    public bool auto;
 }
 
 /// <summary>
