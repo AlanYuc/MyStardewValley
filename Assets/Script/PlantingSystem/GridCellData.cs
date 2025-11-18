@@ -6,7 +6,7 @@ using System;
 [Serializable]
 public class GridCellData
 {
-    //土壤相关
+    //土壤相关 实时更新
 
     /// <summary>
     /// 是否开垦
@@ -21,7 +21,7 @@ public class GridCellData
     /// </summary>
     public bool isPlanted = false;
 
-    //种植相关
+    //种植相关 保存数据时更新
 
     /// <summary>
     /// 作物id
