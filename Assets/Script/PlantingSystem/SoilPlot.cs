@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SoilPlot : MonoBehaviour
@@ -47,7 +48,7 @@ public class SoilPlot : MonoBehaviour
     }
 
     /// <summary>
-    /// 播种
+    /// 播种 从工具栏
     /// </summary>
     public void PlantSeed(ItemData itemData)
     {
@@ -67,5 +68,27 @@ public class SoilPlot : MonoBehaviour
 
         //设置种子为第一阶段
         plant.SetGrowthStage(1);
+    }
+
+    /// <summary>
+    /// 播种 从存档
+    /// </summary>
+    /// <param name="grid"></param>
+    public void PlantSeed(GridCellData grid)
+    {
+        //植物数据
+        SeedData seedData = DataManager.Instance.seedDataList.First(
+            seedData => seedData.id == grid.plant_id
+            );
+
+        //获取prefab
+        GameObject prefab = DataManager.Instance.prefabDict[seedData.prefab_name];
+
+        //生成种子并拿到其引用
+        plant = Instantiate(prefab, transform.position, Quaternion.identity, transform).GetComponent<Plant>();
+
+        //注入数据
+        plant.SetData(seedData);
+        plant.SetData(grid);
     }
 }

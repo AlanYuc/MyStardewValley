@@ -178,6 +178,18 @@ public class Plant : MonoBehaviour
     }
 
     /// <summary>
+    /// 设置plant数据
+    /// </summary>
+    /// <param name="grid"></param>
+    public void SetData(GridCellData grid)
+    {
+        SetGrowthStage(grid.current_state);//设置阶段
+        growthTimer = grid.timer;//恢复定时器
+        isGrowing = grid.isGrowing;
+        isMature = grid.isMature;
+    }
+
+    /// <summary>
     /// 种子开始生长
     /// </summary>
     public void StartGrow()
