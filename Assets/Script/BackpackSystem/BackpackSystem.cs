@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using UnityEngine;
 
 public class BackpackSystem : MonoBehaviour
@@ -42,6 +44,10 @@ public class BackpackSystem : MonoBehaviour
     /// </summary>
     public GameObject collectPrefab;
     /// <summary>
+    /// 储物箱预制体
+    /// </summary>
+    public GameObject storageBoxPrefab;
+    /// <summary>
     /// 记录鼠标拖拽开始的slot
     /// </summary>
     public Slot lastSlot;
@@ -55,9 +61,10 @@ public class BackpackSystem : MonoBehaviour
         //初始化单例
         Instance = this;
 
-        slotPrefab      = Resources.Load<GameObject>("Prefab/Slot");
-        itemPrefab      = Resources.Load<GameObject>("Prefab/Item");
-        collectPrefab   = Resources.Load<GameObject>("Prefab/CollectItem");
+        slotPrefab          = Resources.Load<GameObject>("Prefab/Slot");
+        itemPrefab          = Resources.Load<GameObject>("Prefab/Item");
+        collectPrefab       = Resources.Load<GameObject>("Prefab/CollectItem");
+        storageBoxPrefab    = Resources.Load<GameObject>("Prefab/StorageBox");
 
         //获取引用
         backpack    = GetComponentInChildren<Backpack>();
@@ -560,13 +567,113 @@ public class BackpackSystem : MonoBehaviour
         //To do
     }
 
+    /// <summary>
+    /// 加载所有背包的数据
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
-        
+        //1.加载toolbar的数据
+        toolbar.LoadData(saveData.backpackSaveData.toolbar_item_list);
+
+        //2.加载backpack的数据
+        backpack.LoadData(saveData.backpackSaveData.backpack_item_list);
+
+        //3.生成所有储物箱 并注入数据
+        foreach(BoxData boxData in saveData.backpackSaveData.box_data_list)
+        {
+            //生成储物箱
+            Vector3 position = new Vector3(boxData.x, boxData.y, boxData.z);
+            GameObject go = Instantiate(storageBoxPrefab, position, Quaternion.identity);
+            //注入数据
+            StorageBox storageBox = go.GetComponent<StorageBox>();
+            storageBox.itemDataList = boxData.item_datas;
+            //更新icon数据
+            for (int i = 0; i < storageBox.itemDataList.Count; i++)
+            {
+                ItemData itemData = storageBox.itemDataList[i];
+                if (itemData != null && itemData.iconName!= null)
+                {
+                    if (DataManager.Instance.spriteDict.ContainsKey(itemData.iconName))
+                    {
+                        itemData.icon = DataManager.Instance.spriteDict[itemData.iconName];
+                    }
+                }
+            }
+        }
+
+        //4.生成地上的可拾取物品
+        foreach(DiscardItemData discardItemData in saveData.backpackSaveData.pickup_items_list)
+        {
+            ItemData itemData = new ItemData(discardItemData.item_data);
+            //补充icon的sprite数据
+            if(itemData != null && itemData.iconName != null)
+            {
+                if (DataManager.Instance.spriteDict.ContainsKey(itemData.iconName))
+                {
+                    itemData.icon = DataManager.Instance.spriteDict[itemData.iconName];
+                }
+            }
+            Vector3 position = new Vector3(discardItemData.x, discardItemData.y, discardItemData.z);
+            CreateItemInWolrd(position, itemData, itemData.curStack, discardItemData.auto);
+        }
     }
 
+    /// <summary>
+    /// 保存所有背包的数据
+    /// </summary>
+    /// <returns></returns>
     public BackpackSaveData SaveGame()
     {
-        return null;
+        BackpackSaveData backpackSaveData = new BackpackSaveData();
+
+        //1.toolbar的数据
+        backpackSaveData.toolbar_item_list = toolbar.GetItemDataToList();
+
+        //2.backpack的数据
+        backpackSaveData.backpack_item_list = backpack.GetItemDataToList();
+
+        //3.记录所有储物箱，以及数据
+        List<BoxData> boxDataList = new List<BoxData>();
+        
+        StorageBox[] storageBoxes = GameObject.FindObjectsOfType<StorageBox>();
+        foreach (StorageBox storageBox in storageBoxes)
+        {
+            BoxData boxData = new BoxData();
+            boxData.x = storageBox.transform.position.x;
+            boxData.y = storageBox.transform.position.y;
+            boxData.z = storageBox.transform.position.z;
+            
+            //boxData.item_datas = storageBox.itemDataList.ToList();
+            List<ItemData> itemDataList = new List<ItemData>();
+            foreach(ItemData itemData in storageBox.itemDataList)
+            {
+                itemDataList.Add(new ItemData(itemData));
+            }
+
+            boxData.item_datas = itemDataList;
+            boxDataList.Add(boxData);
+        }
+
+        backpackSaveData.box_data_list = boxDataList;
+
+
+        //4.记录地上的可拾取物品
+        List<DiscardItemData> pickupItemList = new List<DiscardItemData>();
+        CollectItem[] pickupItems = GameObject.FindObjectsOfType<CollectItem>();
+        foreach(CollectItem collectItem in pickupItems)
+        {
+            DiscardItemData discardItemData = new DiscardItemData();
+            discardItemData.x = collectItem.transform.position.x;
+            discardItemData.y = collectItem.transform.position.y;
+            discardItemData.z = collectItem.transform.position.z;
+            discardItemData.item_data = new ItemData(collectItem.itemData);
+            discardItemData.auto = collectItem.autoCollect;
+
+            pickupItemList.Add(discardItemData);
+        }
+        backpackSaveData.pickup_items_list = pickupItemList;
+        
+        return backpackSaveData;
     }
 }

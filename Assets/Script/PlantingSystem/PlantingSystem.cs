@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -100,6 +101,8 @@ public class PlantingSystem : MonoBehaviour
     /// <summary>
     /// 创建土壤地块
     /// </summary>
+    /// <param name="mousePos">鼠标位置</param>
+    /// <returns></returns>
     public SoilPlot CreateSoilPlot(Vector3 mousePos)
     {
         Debug.Log("CreateSoilPlot");
@@ -107,6 +110,16 @@ public class PlantingSystem : MonoBehaviour
         //将鼠标的世界坐标转换成网格坐标
         Vector2Int gridPos = WorldToGrid(mousePos);
 
+        return CreateSoilPlot(gridPos);
+    }
+
+    /// <summary>
+    /// 创建土壤地块
+    /// </summary>
+    /// <param name="gridPos">网格坐标</param>
+    /// <returns></returns>
+    public SoilPlot CreateSoilPlot(Vector2Int gridPos)
+    {
         //判断鼠标位置是否在可开垦土地上
         if (!IsPositionValid(gridPos))
         {
@@ -303,13 +316,84 @@ public class PlantingSystem : MonoBehaviour
         soilPlot.plant = null;
     }
 
+    /// <summary>
+    /// 初始化加载土壤种植数据
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
-        
+        LoadGrid(saveData.plantSaveData.gridData);
     }
 
+    /// <summary>
+    /// 读取土壤网格数据
+    /// </summary>
+    /// <param name="gridData"></param>
+    private void LoadGrid(GridCellData[,] gridData)
+    {
+        //加载数据
+        gridCellDatas = gridData;
+
+        //生成土壤 浇水 种植
+        for(int i = 0; i < gridSize.x; i++)
+        {
+            for(int j = 0; j < gridSize.y; j++)
+            {
+                GridCellData grid = gridData[i, j];
+
+                if (!grid.isPlanted)
+                {
+                    continue;
+                }
+
+                Vector2Int pos = new Vector2Int(i, j);
+                SoilPlot soilPlot = CreateSoilPlot(pos);
+
+                if (grid.isWatered)
+                {
+                    soilPlot.Watered();
+                }
+
+                if (grid.isPlanted)
+                {
+                    //种植
+                    soilPlot.PlantSeed(grid);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 保存土壤和种植数据
+    /// </summary>
+    /// <returns></returns>
     public PlantSaveData SaveGame()
     {
-        return null;
+        //更新数据，只需要保存非实时数据
+        for(int i = 0; i < gridSize.x; i++)
+        {
+            for(int j = 0; j < gridSize.y; j++)
+            {
+                //有种植植物的土壤地块才更新数据
+                if (gridCellDatas[i, j].isPlanted) 
+                {
+                    //先拿到已激活的土壤的相关数据
+                    SoilPlot soilPlot = activeSoilPlots[new Vector2Int(i, j)];
+                    Plant plant = soilPlot.plant;
+                    //SeedData seedData = soilPlot.plant.seedData;
+
+                    gridCellDatas[i, j].plant_id = plant.seedData.id;
+                    gridCellDatas[i, j].timer = plant.growthTimer;
+                    gridCellDatas[i, j].current_state = plant.currentStage;
+                    gridCellDatas[i, j].isGrowing = plant.isGrowing;
+                    gridCellDatas[i, j].isMature = plant.isMature;
+                }
+            }
+        }
+
+        PlantSaveData plantSaveData = new PlantSaveData();
+        plantSaveData.gridData = gridCellDatas;
+
+        return plantSaveData;
     }
 }

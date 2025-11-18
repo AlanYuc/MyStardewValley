@@ -181,7 +181,7 @@ public class TimeSystem : MonoBehaviour
         }
 
         //按键L模拟上床睡觉
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && !isSleeping)
         {
             ManualSleep();
         }
@@ -250,8 +250,8 @@ public class TimeSystem : MonoBehaviour
         //加速时间比例尺
         timeScale *= nightTimeMultiplier;//晚上的时间加速
 
-        //To do
         //睡觉时保存游戏
+        SaveSystem.Instance.SaveGame();
     }
 
     /// <summary>
@@ -302,13 +302,41 @@ public class TimeSystem : MonoBehaviour
         _dateText.text = currentDay.ToString() + "日 " + "星期" + weekday;
     }
 
+    /// <summary>
+    /// 加载时间数据
+    /// </summary>
+    /// <param name="saveData"></param>
     public void LoadGame(SaveData saveData)
     {
-        
+        currentDay = saveData.timeSaveData.currentDay;
+        currentYear = saveData.timeSaveData.currentYear;
+        currentSeason = saveData.timeSaveData.currentSeason;
+        currentHour = saveData.timeSaveData.hour;
+        currentMinute = saveData.timeSaveData.minute;
+        gameTimer = saveData.timeSaveData.gameTimer;
+        virtualAccumulator = saveData.timeSaveData.gameTimeSecond;
+        realTimeAccumulator = saveData.timeSaveData.realTimeSecond;
+
+        UpdateTimeUI();
     }
 
+    /// <summary>
+    /// 保存游戏内时间数据
+    /// </summary>
+    /// <returns></returns>
     public TimeSaveData SaveGame()
     {
-        return null;
+        TimeSaveData timeSaveData = new TimeSaveData();
+
+        timeSaveData.currentDay = currentDay;
+        timeSaveData.currentYear = currentYear;
+        timeSaveData.currentSeason = currentSeason;
+        timeSaveData.hour = currentHour;
+        timeSaveData.minute = currentMinute;
+        timeSaveData.gameTimer = gameTimer;
+        timeSaveData.gameTimeSecond = virtualAccumulator;
+        timeSaveData.realTimeSecond = realTimeAccumulator;
+
+        return timeSaveData;
     }
 }
