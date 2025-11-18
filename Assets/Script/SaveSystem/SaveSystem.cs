@@ -18,7 +18,7 @@ public class SaveSystem : MonoBehaviour
     {
         Instance = this;
 
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
