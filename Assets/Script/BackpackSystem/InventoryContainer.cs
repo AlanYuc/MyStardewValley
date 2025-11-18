@@ -220,4 +220,26 @@ public class InventoryContainer : MonoBehaviour
 
         isOpen = false;
     }
+
+    /// <summary>
+    /// 加载游戏时向背包内添加数据
+    /// </summary>
+    /// <param name="toolbarItemList"></param>
+    public void LoadData(List<ItemData> itemList)
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] != null && itemList[i].iconName != null) 
+            {
+                //补充sprite数据 由于JsonIgnore，在序列化时被忽略
+                if (DataManager.Instance.spriteDict.ContainsKey(itemList[i].iconName))
+                {
+                    itemList[i].icon = DataManager.Instance.spriteDict[itemList[i].iconName];
+                }
+
+                //往相应的格子里添加数据
+                slotList[i].AddItem(itemList[i], itemList[i].curStack);
+            }
+        }
+    }
 }
