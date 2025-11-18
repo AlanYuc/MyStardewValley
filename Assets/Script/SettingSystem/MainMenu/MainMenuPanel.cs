@@ -41,18 +41,22 @@ public class MainMenuPanel : BasePanel
         _createGameButton.onClick.AddListener(() =>
         {
             SettingSystem.Instance.OpenPanel(PanelType.Create);
+            MusicManager.Instance.PlayOneClip("偌聽");
         });
         _loadGameButton.onClick.AddListener(() =>
         {
             SettingSystem.Instance.OpenPanel(PanelType.Load);
+            MusicManager.Instance.PlayOneClip("偌聽");
         });
         _fishBasketButton.onClick.AddListener(() =>
         {
             Debug.Log("眸赶穡");
+            MusicManager.Instance.PlayOneClip("偌聽");
         });
         _exitGameButton.onClick.AddListener(() =>
         {
             Application.Quit();
+            MusicManager.Instance.PlayOneClip("偌聽");
         });
     }
 

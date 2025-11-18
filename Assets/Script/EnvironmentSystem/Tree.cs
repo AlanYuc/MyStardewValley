@@ -48,6 +48,8 @@ public class Tree : MonoBehaviour
 
             BackpackSystem.Instance.TryAddItem(treeItemData, 5);
 
+            MusicManager.Instance.PlayOneClip("·¥Ä¾");
+
             Destroy(gameObject);
         }
     }

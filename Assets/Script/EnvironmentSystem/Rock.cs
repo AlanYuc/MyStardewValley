@@ -30,6 +30,8 @@ public class Rock : MonoBehaviour
         //添加石头进入背包
         BackpackSystem.Instance.TryAddItem(rockItemData, 1);
 
+        MusicManager.Instance.PlayOneClip("采石");
+
         //销毁
         Destroy(gameObject);
     }

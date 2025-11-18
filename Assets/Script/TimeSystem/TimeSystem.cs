@@ -224,6 +224,9 @@ public class TimeSystem : MonoBehaviour
 
         //复原时间比例尺
         timeScale = staticTimeScale;//白天的时间不加速
+
+        //播放音效
+        MusicManager.Instance.PlayOneClip("鸡打鸣");
     }
 
     /// <summary>

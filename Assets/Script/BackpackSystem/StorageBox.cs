@@ -62,6 +62,9 @@ public class StorageBox : MonoBehaviour
 
                 //打开UI
                 BackpackSystem.Instance.storageBox.ShowStorageBox(itemDataList);
+
+                //打开音效
+                MusicManager.Instance.PlayOneClip("储物箱");
             }
         }
     }

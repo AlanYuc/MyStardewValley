@@ -64,6 +64,8 @@ public class Weed : MonoBehaviour
 
         BackpackSystem.Instance.TryAddItem(weedItemData, 1);
 
+        MusicManager.Instance.PlayOneClip("¸î²Ý");
+
         Destroy(gameObject);
     }
 }

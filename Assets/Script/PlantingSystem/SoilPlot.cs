@@ -37,6 +37,8 @@ public class SoilPlot : MonoBehaviour
     public void Watered()
     {
         _water.SetActive(true);
+
+        MusicManager.Instance.PlayOneClip("浇水");
     }
 
     /// <summary>
@@ -68,6 +70,8 @@ public class SoilPlot : MonoBehaviour
 
         //设置种子为第一阶段
         plant.SetGrowthStage(1);
+
+        MusicManager.Instance.PlayOneClip("播种");
     }
 
     /// <summary>

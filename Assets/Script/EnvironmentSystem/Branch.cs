@@ -26,6 +26,8 @@ public class Branch : MonoBehaviour
 
         BackpackSystem.Instance.TryAddItem(branchItemData, 1);
 
+        MusicManager.Instance.PlayOneClip("·¥Ä¾");
+
         Destroy(gameObject);
     }
 }

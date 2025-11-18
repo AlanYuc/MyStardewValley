@@ -106,6 +106,8 @@ public class ToolModule : MonoBehaviour
         {
             Debug.Log("已将水补满");
             currentWateringCanCapacity = maxWateringCanCapacity;
+
+            MusicManager.Instance.PlayOneClip("灌水");
         }
     }
 

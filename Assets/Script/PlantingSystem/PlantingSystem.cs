@@ -151,6 +151,8 @@ public class PlantingSystem : MonoBehaviour
         //记录已激活的土壤
         activeSoilPlots.Add(gridPos, soilPlot);
 
+        MusicManager.Instance.PlayOneClip("开垦");
+
         return soilPlot;
     }
 

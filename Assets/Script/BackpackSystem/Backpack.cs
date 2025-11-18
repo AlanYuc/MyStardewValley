@@ -40,6 +40,8 @@ public class Backpack : InventoryContainer
             if (!isOpen)
             {
                 OpenContainer();
+
+                MusicManager.Instance.PlayOneClip("±³°ü");
             }
             else
             {
