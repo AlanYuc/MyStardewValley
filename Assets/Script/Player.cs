@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements.Experimental;
 
 public class Player : MonoBehaviour
 {
@@ -39,6 +40,11 @@ public class Player : MonoBehaviour
     public GameObject walkEffect;
     public float walkEffectOffset;
 
+    /// <summary>
+    /// 音效组件
+    /// </summary>
+    public AudioSource _walkAudioSource;
+
     //玩家信息
 
     /// <summary>
@@ -69,8 +75,13 @@ public class Player : MonoBehaviour
         _rb     = GetComponent<Rigidbody2D>();
         _anim   = GetComponent<Animator>();
         walkEffect = transform.Find("WalkEffect").gameObject;
+        _walkAudioSource = transform.Find("WalkMusic").GetComponent<AudioSource>();
 
         walkEffectOffset = 0.2f;
+
+        _walkAudioSource.clip = MusicManager.Instance.GetAudioClip("走路");
+        _walkAudioSource.loop = true;
+        _walkAudioSource.playOnAwake = false;
     }
 
     // Start is called before the first frame update
@@ -116,8 +127,11 @@ public class Player : MonoBehaviour
         //将参数赋值到animator
         _anim.SetBool("IsMove", isMove);
 
+        //播放走路音效
+        PlayAudio(isMove);
+
         //记录并将最后的移动方向赋值到animator,只记录不为0
-        if(movementDir != Vector2.zero)
+        if (movementDir != Vector2.zero)
         {
             lastMovementDir = movementDir;
             _anim.SetFloat("LastHorizontal", lastMovementDir.x);
@@ -171,5 +185,30 @@ public class Player : MonoBehaviour
         playerSaveData.level = level;
 
         return playerSaveData;
+    }
+
+    /// <summary>
+    /// 播放走路音效
+    /// </summary>
+    /// <param name="isPlay">是否需要播放</param>
+    public void PlayAudio(bool isPlay)
+    {
+        //已经在走路了
+        if (_walkAudioSource.isPlaying && isPlay)
+        {
+            return;
+        }
+
+        //开始走路
+        if (isPlay)
+        {
+            _walkAudioSource.time = 0;//从0开始播放
+            _walkAudioSource.Play();
+        }
+        //停下
+        else
+        {
+            _walkAudioSource.Stop();
+        }
     }
 }
