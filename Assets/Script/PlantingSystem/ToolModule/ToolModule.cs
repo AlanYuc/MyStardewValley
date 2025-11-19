@@ -248,11 +248,11 @@ public class ToolModule : MonoBehaviour
     /// <summary>
     /// 接收工具栏中选中的物品
     /// </summary>
-    /// <param name="item"></param>
-    public void UpdateItem(Item item)
+    /// <param name="itemData"></param>
+    public void UpdateItem(ItemData itemData)
     {
         //当前的格子没有东西
-        if(item == null)
+        if(itemData == null)
         {
             currentTool = ToolType.None;
             return;
@@ -260,7 +260,7 @@ public class ToolModule : MonoBehaviour
 
         //判断传过来的物品名称，只有是工具的时候进行记录
         //名称需要与itemData中的名称一致
-        switch (item.itemData.name)
+        switch (itemData.name)
         {
             case "锄头":
                 currentTool = ToolType.Hoe;

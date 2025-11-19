@@ -69,24 +69,24 @@ public class SeedModule : MonoBehaviour
     /// <summary>
     /// 接收工具栏中选中的物品
     /// </summary>
-    /// <param name="item"></param>
-    public void UpdateItem(Item item)
+    /// <param name="itemData"></param>
+    public void UpdateItem(ItemData itemData)
     {
         //当前的格子没有东西
-        if (item == null)
+        if (itemData == null)
         {
             currentSeed = SeedType.None;
             return;
         }
 
         //不是种子
-        if(item.itemData.itemType != ItemType.Seed)
+        if(itemData.itemType != ItemType.Seed)
         {
             currentSeed = SeedType.None;
             return;
         }
 
-        switch (item.itemData.name)
+        switch (itemData.name)
         {
             case "防风草种子":
                 currentSeed = SeedType.Parsnip;
